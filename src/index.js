@@ -3,11 +3,17 @@ import './style.scss'
 import './Themes.css'
 import './icApp.js'
 import IAC from './icApp-creator.js'
+import IAU from './icApp-updater.js'
+
+const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
+const Theme = {
+	set: a => [a = [a, a=>([a=parseInt(a).toString(16),a.length < 2 ? '0'+a:a])[1], '#'], new ic.icApp.e('#root').clr(...ColorThemes).cla(ColorThemes[typeof a[0] == 'number' ? a[0] : ColorThemes.indexOf(a[0])]), getComputedStyle(ic.icApp.qs('#root')).getPropertyValue('--ic-c-i4').match(/\d+/g).forEach(b=> a[2] += a[1](b)), ['theme-color', 'msapplication-navbutton-color', 'apple-mobile-web-app-status-bar-style'].forEach(b=> new ic.icApp.e(`[name=${b}`).sa('content', a[2]))]
+}
 
 ic.init = icApp => {
 	var _root_ = new icApp.e('#root')
 	_root_.chr()
-
+	Theme.set('red')
 	var user = {
 		name: 'Imesh Chamara',
 		bio: `I' m a Student and Programmer.
@@ -18,7 +24,7 @@ I Programmed this Website.
 This is one of my website.
 
 http://ic-tech.dx.am/`,
-		image: ''
+		image: 'https://i.imgur.com/Pl6pbVF.jpg'
 	}
 
 var idCounter = 0 
@@ -31,29 +37,35 @@ const icons = [
 ]
 
 	IAC.create(icApp, _root_, [
-		{ t: 'div', cl: ['ICApp', 'Main'], ch: [
-			{ t: 'div', ch: [
-				{ t: 'div', cl: 'c1' },
-				{ t: 'div', cl: 'c2', ch: [
-					{ t: 'span', cl: 'c1', txt: user.name },
-					{ t: 'span', cl: 'c3', txt: user.bio }
-				]},
-				{ t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
-					{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
-					{ t: 'div', cl: 'c1', ch: [
-						{ t: 'div' },
-						{ t: 'div' },
-						{ t: 'div' }
-					]},
+		{ t: 'div', cl: 'ICApp', ch: [
+			{ t: 'div', cl: ['ICPage', 'Main'], d: {iau: IAU.link(a=>console.log(a))}, ch: [
+				{ t: 'div', ch: [
+					{ t: 'div', cl: 'c1', s: {backgroundImage: `url(${user.image})`} },
 					{ t: 'div', cl: 'c2', ch: [
-						{ t: 'a', at: [['href', '/']], html: icons[0] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[1] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[2] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[3] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[4] }
-					]}
-				]},
+						{ t: 'span', cl: 'c1', txt: user.name },
+						{ t: 'span', cl: 'c3', txt: user.bio }
+					]},
+					location.pathname == '/' ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
+						{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
+						{ t: 'div', cl: 'c1', ch: [
+							{ t: 'div' },
+							{ t: 'div' },
+							{ t: 'div' }
+						]},
+						{ t: 'div', cl: 'c2', ch: [
+							{ t: 'a', at: [['href', '/']], html: icons[0] },
+							{ t: 'a', e: [['click', a => console.log(a)]], html: icons[1] },
+							{ t: 'a', e: [['click', a => console.log(a)]], html: icons[2] },
+							{ t: 'a', e: [['click', a => console.log(a)]], html: icons[3] },
+							{ t: 'a', e: [['click', a => console.log(a)]], html: icons[4] }
+						]}
+					]},
+				]}
 			]}
 		]}
 	])
+	
+const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
+window.addEventListener('resize', winsize)
+winsize()
 }
