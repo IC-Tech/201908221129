@@ -1,9 +1,8 @@
 /* Copyright © Imesh Chamara 2019 */
-import './style.scss'
 import './Themes.css'
+import './style.scss'
 import './icApp.js'
 import IAC from './icApp-creator.js'
-import IAU from './icApp-updater.js'
 
 const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
 const Theme = {
@@ -57,7 +56,7 @@ const icons = [
 ]
 	IAC.create(icApp, _root_, [
 		{ t: 'div', cl: 'ICApp', ch: [
-			{ t: 'div', cl: ['ICPage', 'Main'], d: {iau: IAU.link(a=>console.log(a))}, ch: [
+			{ t: 'div', cl: ['ICPage', 'Main'], ch: [
 				{ t: 'div', ch: [
 					{ t: 'div', cl: 'c1', s: {backgroundImage: `url(${user.image})`} },
 					{ t: 'div', cl: 'c2', ch: [
