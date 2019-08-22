@@ -10,7 +10,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const merge = require('webpack-merge')
 const common = require('./webpack.config.common.js')
 
-const outputDirectory = 'dist';
+const outputDirectory = 'public';
 const PACKAGE = require('./package.json');
 const banner = PACKAGE.name + ' v' + PACKAGE.version + '\nCopyright © Imesh Chamara 2019\n@license ' + PACKAGE.license + '\nhttp://ic-tech.dx.am';
 

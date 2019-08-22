@@ -4,7 +4,7 @@ const HtmlWebpackPlugin= require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
-const outputDirectory = 'dist';
+const outputDirectory = 'public';
 
 module.exports = {
   entry: {
@@ -36,14 +36,14 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'IC-Tech',
-      template: './public/index.html',
+      template: './src/public/index.html',
       filename: 'index.html',
       chunks: ['ic-tech', 'vendor'],
-      favicon: './public/favicon.ico'
+      favicon: './src/public/favicon.ico'
     }),
     new CopyPlugin([
       {
-        from: 'public/*',
+        from: 'src/public/*',
         to: './',
         flatten: true
       }
