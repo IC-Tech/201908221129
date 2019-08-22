@@ -1,5 +1,6 @@
 /* Copyright © Imesh Chamara 2019 */
 import './style.scss'
+import './Themes.css'
 import './icApp.js'
 import IAC from './icApp-creator.js'
 
