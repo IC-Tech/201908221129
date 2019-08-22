@@ -21,7 +21,7 @@ const icApp = {
     cha(v) { this.v.appendChild(v); return this }
     // eslint-disable-next-line no-unused-vars
     chr(v) { return ([v == undefined ? (a=>{while(this.ch.length > 0)this.ch[0].remove()})() : this.ch[v].remove(), this])[1] }
-    cla(v) { this.cl.add(v); return this }
+    cla(v) { return ([v = [v, this.cl], typeof v[0] == 'object' ? v[1].add(...v[0]) : v[1].add(v[0]), this])[2] }
     // eslint-disable-next-line no-unused-vars
     clr(v) { return ([typeof v == 'object' ? (a=>v.forEach(v=>this.clr(v)))() : this.cl.remove(v) ,this])[1] }
     clc(v) { return typeof v == 'object' ? icApp._n.a(v, v => this.clc(v)) : this.cl.contains(v) }
@@ -29,6 +29,7 @@ const icApp = {
     get d() { return this.v.dataset }
     set stp(v) { this.st.setProperty(v[0], v[1]) }
     set txt(v) { this.v.innerText = v }
+    set html(v) { this.v.innerHTML = v }
     sa(n,v) {this.v.setAttribute(n,v); return this }
     ae(n,f) { this.v.addEventListener(n,f); return this }
     get p() {return new icApp.e(this.v.parentElement) }
