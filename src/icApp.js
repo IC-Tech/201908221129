@@ -19,6 +19,7 @@ const icApp = {
     get cl() { return this.v.classList }
     get ch() { return this.v.children }
     cha(v) { this.v.appendChild(v); return this }
+    ap(v) { this.v.appendChild(v); return this }
     // eslint-disable-next-line no-unused-vars
     chr(v) { return ([v == undefined ? (a=>{while(this.ch.length > 0)this.ch[0].remove()})() : this.ch[v].remove(), this])[1] }
     cla(v) { return ([v = [v, this.cl], typeof v[0] == 'object' ? v[1].add(...v[0]) : v[1].add(v[0]), this])[2] }
