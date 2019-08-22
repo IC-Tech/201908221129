@@ -1,0 +1,52 @@
+const path = require('path');
+const webpack = require('webpack')
+const HtmlWebpackPlugin= require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+
+const outputDirectory = 'dist';
+
+module.exports = {
+  entry: {
+    'ic-tech': './src/index.js'
+  },
+  output: {
+    path: path.join(__dirname, outputDirectory),
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
+    publicPath: '/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'file-loader?name=assets/[name].[ext]&limit=100000'
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
+  devServer: {
+    port: 3000,
+    open: false
+  },
+  plugins: [
+    new webpack.ProgressPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'IC-Tech',
+      template: './public/index.html',
+      filename: 'index.html',
+      chunks: ['ic-tech', 'vendor'],
+      favicon: './public/favicon.ico'
+    }),
+    new CopyPlugin([
+      {
+        from: 'public/*',
+        to: './',
+        flatten: true
+      }
+    ])
+  ]
+};
