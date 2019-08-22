@@ -27,7 +27,6 @@ body, html {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
-  min-width: 320px;
   background-color: rgb(224, 224, 224);
   height: 100%;
   margin: 0 auto;
@@ -89,6 +88,26 @@ body, html {
       }
       &.c3 {
         font-size: 19px;
+        div {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        a {
+          color: col(i5);
+          text-decoration: none;
+          svg {
+            width: 30px;
+            min-height: 30px;
+            height: auto;
+            color: #666;
+            margin: 6px;
+            &:hover, &:active {
+              color: col(i5);
+            }
+          }
+        }
       }
     }
     > div {
@@ -97,6 +116,7 @@ body, html {
         background-position: top center;
         background-size: cover;
         border-radius: 6px 0 0 6px;
+        flex-shrink: 0;
       }
       &.c2 {
         display: flex;
@@ -106,72 +126,72 @@ body, html {
         box-sizing: border-box;
       }
     }
+  }
     label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      height: auto;
-      width: auto;
-      .c1 {
-        width: 40px;
-        height: 40px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: auto;
+    width: auto;
+    .c1 {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #0006;
+      background-color: #fff;
+      opacity: .5;
+      transition-duration: $default-transition;
+      box-sizing: border-box;
+      padding: 6px;
+      &:hover {
+        opacity: 1;
+      }
+      div {
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        box-shadow: 0 0 10px #0006;
-        background-color: #fff;
-        opacity: .5;
-        transition-duration: $default-transition;
-        box-sizing: border-box;
-        padding: 6px;
-        &:hover {
+        background-color: col(i6);
+        margin: 2px auto;
+      }
+    }
+    .c2 {
+      display: none;
+      flex-direction: column;
+      > * {
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+    }
+    input {
+      display: none;
+      &:checked {
+        & ~ .c2 {
+          display: flex;
+        }
+        & + .c1 {
           opacity: 1;
-        }
-        div {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background-color: col(i6);
-          margin: 2px auto;
-        }
-      }
-      .c2 {
-        display: none;
-        flex-direction: column;
-        > * {
-          flex-grow: 0;
-          flex-shrink: 0;
-        }
-      }
-      input {
-        display: none;
-        &:checked {
-          & ~ .c2 {
-            display: flex;
-          }
-          & + .c1 {
-            opacity: 1;
-            background-color: col(i5);
-            div {
-              background-color: #fff;
-            }
+          background-color: col(i5);
+          div {
+            background-color: #fff;
           }
         }
       }
     }
-  }
-  a {
-    color: col(i5);
-    background-color: #fff;
-    padding: 8px !important;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #0006;
-    margin: 6px auto;
-    transition-duration: $default-transition;
-    &:hover {
-      color: #fff;
-      background-color: col(i5);
+    a {
+      color: col(i5);
+      background-color: #fff;
+      padding: 8px !important;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0006;
+      margin: 6px auto;
+      transition-duration: $default-transition;
+      &:hover {
+        color: #fff;
+        background-color: col(i5);
+      }
     }
   }
 }
