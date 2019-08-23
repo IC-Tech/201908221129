@@ -15,16 +15,6 @@ ic.init = icApp => {
 	var _root_ = new icApp.e('#root')
 	_root_.chr()
 	Theme.set('red')
-const Links = [
-  ['http://ic-tech.dx.am', 8],
-  ['mailto:imesh1chamara@gmail.com', 5],
-  ['https://twitter.com/_Imesh_Chamara_', 6],
-  ['https://www.youtube.com/channel/UCjOItCJ9TyNphWlEoUR7cIw', 9],
-  ['https://www.instagram.com/imeshchamara/', 12],
-  ['https://plus.google.com/u/0/115820475043722713439', 11],
-  ['https://github.com/IC-Tech', 7],
-  ['https://discord.gg/CAmERp2', 10]
-]
 var idCounter = 0
 var id_col = []
 const icons = [
@@ -46,10 +36,10 @@ const icons = [
 		{ t: 'div', cl: 'ICApp', ch: [
 			{ t: 'div', cl: ['ICPage', 'Main', 'c1'], d: {iau: IAU.link('UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none')}, ch: [
 				{ t: 'div', ch: [
-					{ t: 'div', cl: 'c1', d: {iau: IAU.link('user', a=> a.e.st.backgroundImage = a.v.image ? `url(${a.v.image})` : '')} },
+					{ t: 'div', cl: 'c1', d: {iau: IAU.link('user', a=> IAC.render(icApp, a.e, {s: {backgroundImage: a.v.image ? `url(${a.v.image})` : ''}}))} },
 					{ t: 'div', cl: 'c2', ch: [
 						{ t: 'span', cl: 'c1', d: {iau: IAU.link('user', a=> a.e.txt = a.v.name)} },
-						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], d: {iau: IAU.link('user', a=> a.e.txt = a.v.bio)} }
+						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], d: {iau: IAU.link('user', a=> IAC.render(icApp, a.e, { txt: a.v.bio, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))}))} }
 					]},
 					location.pathname == '/' ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 						{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
@@ -78,7 +68,7 @@ window.addEventListener('resize', winsize)
 IAU.update('UI', 1)
 setTimeout(a=> {
 	IAU.update('UI', 0)
-	IAU.update('user', {
+	var user = {
 		name: 'Imesh Chamara',
 		bio: `I' m seventeen old boy from Sri Lanka.
 Doing coding stuff all the day with no purpose.
@@ -91,10 +81,18 @@ Things I Don't Like: Alcohol, Drugs, Violence, Travelings.
 Used Coding Languages: C, VB, C#, C++, HTML, PHP, Javascript (Both Server-side and Client-side), css, babel, sass
 `,
 		image: 'https://i.imgur.com/Pl6pbVF.jpg',
-	})
-	IAC.create(icApp, new icApp.e('#ic_i'+id_col[0]), [
-		{ t: 'div', ch: Links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) }
-	], true)
+		links: [
+  ['http://ic-tech.dx.am', 8],
+  ['mailto:imesh1chamara@gmail.com', 5],
+  ['https://twitter.com/_Imesh_Chamara_', 6],
+  ['https://www.youtube.com/channel/UCjOItCJ9TyNphWlEoUR7cIw', 9],
+  ['https://www.instagram.com/imeshchamara/', 12],
+  ['https://plus.google.com/u/0/115820475043722713439', 11],
+  ['https://github.com/IC-Tech', 7],
+  ['https://discord.gg/CAmERp2', 10]
+]
+	}
+	IAU.update('user', user)
 	winsize()
 }, 1200)
 
