@@ -33,6 +33,11 @@ body, html {
   -webkit-box-shadow: 0 0 46px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 46px rgba(0, 0, 0, 0.5);
   position: relative;
+  .c1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 .ICApp {
   display: block;
@@ -54,12 +59,13 @@ body, html {
 .ICPage {
   width: 100%;
   height: 100%;
+  background-color: #fff;
+  .loading-ani {
+    margin: 0 auto;
+  }
 }
 
 .Main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background-color: #eee;
   > div {
     display: flex;
