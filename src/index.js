@@ -3,8 +3,7 @@ import './Themes.css'
 import './style.scss'
 import './icApp.js'
 import './loading-ani.css'
-import IAC from './icApp-creator.js'
-import IAU from './icApp-updater.js'
+import {IAC, IAU} from './icApp-creator.js'
 
 const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
 const Theme = {
