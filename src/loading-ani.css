@@ -1,0 +1,32 @@
+/* Copyright © Imesh Chamara 2019 */
+.loading-ani {
+	display: block;
+	width: 160px;
+	height: 160px;
+	border: 10px solid rgb(var(--ic-c-i5));
+	border-radius: 50%;
+	border-left-color: rgba(255, 255, 255, 0);
+	border-right-color: rgba(255, 255, 255, 0);
+	-webkit-animation: normal cubic-bezier(.46,.03,.14,.9) loading-ani forwards 1s infinite;
+	        animation: normal cubic-bezier(.46,.03,.14,.9) loading-ani forwards 1s infinite;
+}
+@-webkit-keyframes loading-ani {
+	0% {
+		-webkit-transform: rotate(0deg);
+		        transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		        transform: rotate(360deg);
+	}
+}
+@keyframes loading-ani {
+	0% {
+		-webkit-transform: rotate(0deg);
+		        transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		        transform: rotate(360deg);
+	}
+}
