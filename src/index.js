@@ -2,7 +2,9 @@
 import './Themes.css'
 import './style.scss'
 import './icApp.js'
+import './loading-ani.css'
 import IAC from './icApp-creator.js'
+import IAU from './icApp-updater.js'
 
 const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
 const Theme = {
@@ -13,20 +15,6 @@ ic.init = icApp => {
 	var _root_ = new icApp.e('#root')
 	_root_.chr()
 	Theme.set('red')
-	var user = {
-		name: 'Imesh Chamara',
-		bio: `I' m seventeen old boy from Sri Lanka.
-Doing coding stuff all the day with no purpose.
-I used to make software for Windows and Linux computers.
-Also now I make Websites and Web Apps that can used in any devices.
-
-Things I Like: Programming, Japanese-Music, Japan.
-Things I Don't Like: Alcohol, Drugs, Violence, Travelings.
-
-Used Coding Languages: C, VB, C#, C++, HTML, PHP, Javascript (Both Server-side and Client-side), css, babel, sass
-`,
-		image: 'https://i.imgur.com/Pl6pbVF.jpg',
-	}
 const Links = [
   ['http://ic-tech.dx.am', 8],
   ['mailto:imesh1chamara@gmail.com', 5],
@@ -56,12 +44,12 @@ const icons = [
 ]
 	IAC.create(icApp, _root_, [
 		{ t: 'div', cl: 'ICApp', ch: [
-			{ t: 'div', cl: ['ICPage', 'Main'], ch: [
+			{ t: 'div', cl: ['ICPage', 'Main', 'c1'], d: {iau: IAU.link('UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none')}, ch: [
 				{ t: 'div', ch: [
-					{ t: 'div', cl: 'c1', s: {backgroundImage: `url(${user.image})`} },
+					{ t: 'div', cl: 'c1', d: {iau: IAU.link('user', a=> a.e.st.backgroundImage = a.v.image ? `url(${a.v.image})` : '')} },
 					{ t: 'div', cl: 'c2', ch: [
-						{ t: 'span', cl: 'c1', txt: user.name },
-						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], txt: user.bio }
+						{ t: 'span', cl: 'c1', d: {iau: IAU.link('user', a=> a.e.txt = a.v.name)} },
+						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], d: {iau: IAU.link('user', a=> a.e.txt = a.v.bio)} }
 					]},
 					location.pathname == '/' ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 						{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
@@ -79,15 +67,36 @@ const icons = [
 						]}
 					]},
 				]}
+			]},
+			{ t: 'div', cl: ['ICPage', 'load', 'c1'], d: {iau: IAU.link('UI', a=> a.e.st.display= a.v == 1 ? 'flex' : 'none')}, ch: [
+				{ t:'div', cl: 'loading-ani' }
 			]}
 		]}
 	])
+const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
+window.addEventListener('resize', winsize)
+IAU.update('UI', 1)
+setTimeout(a=> {
+	IAU.update('UI', 0)
+	IAU.update('user', {
+		name: 'Imesh Chamara',
+		bio: `I' m seventeen old boy from Sri Lanka.
+Doing coding stuff all the day with no purpose.
+I used to make software for Windows and Linux computers.
+Also now I make Websites and Web Apps that can used in any devices.
 
+Things I Like: Programming, Japanese-Music, Japan.
+Things I Don't Like: Alcohol, Drugs, Violence, Travelings.
+
+Used Coding Languages: C, VB, C#, C++, HTML, PHP, Javascript (Both Server-side and Client-side), css, babel, sass
+`,
+		image: 'https://i.imgur.com/Pl6pbVF.jpg',
+	})
 	IAC.create(icApp, new icApp.e('#ic_i'+id_col[0]), [
 		{ t: 'div', ch: Links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) }
 	], true)
+	winsize()
+}, 1200)
 
-const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
-window.addEventListener('resize', winsize)
-winsize()
+
 }
