@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production --config webpack.config.pro.js",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js"
+    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js",
+    "dev-server": "nodemon api/users.js"
   },
   "keywords": [],
   "author": "Imesh Chamara <imesh1chamara@gmail.com> (http://ic-tech.dx.am/)",
