@@ -33,14 +33,14 @@ const icons = [
 ]
 	IAC.create(icApp, _root_, [
 		{ t: 'div', cl: 'ICApp', ch: [
-			{ t: 'div', cl: ['ICPage', 'Main', 'c1'], d: {iau: IAU.link('UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none')}, ch: [
+			{ t: 'div', cl: ['ICPage', 'Main', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none'], ch: [
 				{ t: 'div', ch: [
-					{ t: 'div', cl: 'c1', d: {iau: IAU.link('user', a=> IAC.render(icApp, a.e, {s: {backgroundImage: a.v.image ? `url(${a.v.image})` : ''}}))} },
+					{ t: 'div', cl: 'c1', iau: ['user', a => IAC.render(icApp, a.e, {s: {backgroundImage: a.v.image ? `url(${a.v.image})` : ''}})] },
 					{ t: 'div', cl: 'c2', ch: [
-						{ t: 'span', cl: 'c1', d: {iau: IAU.link('user', a=> a.e.txt = a.v.name)} },
-						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], d: {iau: IAU.link('user', a=> IAC.render(icApp, a.e, { txt: a.v.bio, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))}))} }
+						{ t: 'span', cl: 'c1', iau: ['user', a=> a.e.txt = a.v.name] },
+						{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], iau: ['user', a=> IAC.render(icApp, a.e, { txt: a.v.bio, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))})] }
 					]},
-					location.pathname == '/' ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
+					ic.whenReady == undefined ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 						{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
 						{ t: 'div', cl: 'c1', ch: [
 							{ t: 'div' },
@@ -57,7 +57,7 @@ const icons = [
 					]},
 				]}
 			]},
-			{ t: 'div', cl: ['ICPage', 'load', 'c1'], d: {iau: IAU.link('UI', a=> a.e.st.display= a.v == 1 ? 'flex' : 'none')}, ch: [
+			{ t: 'div', cl: ['ICPage', 'load', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 1 ? 'flex' : 'none'], ch: [
 				{ t:'div', cl: 'loading-ani' }
 			]}
 		]}
@@ -81,15 +81,15 @@ Used Coding Languages: C, VB, C#, C++, HTML, PHP, Javascript (Both Server-side a
 `,
 		image: 'https://i.imgur.com/Pl6pbVF.jpg',
 		links: [
-  ['http://ic-tech.dx.am', 8],
-  ['mailto:imesh1chamara@gmail.com', 5],
-  ['https://twitter.com/_Imesh_Chamara_', 6],
-  ['https://www.youtube.com/channel/UCjOItCJ9TyNphWlEoUR7cIw', 9],
-  ['https://www.instagram.com/imeshchamara/', 12],
-  ['https://plus.google.com/u/0/115820475043722713439', 11],
-  ['https://github.com/IC-Tech', 7],
-  ['https://discord.gg/CAmERp2', 10]
-]
+			['http://ic-tech.dx.am', 8],
+			['mailto:imesh1chamara@gmail.com', 5],
+			['https://twitter.com/_Imesh_Chamara_', 6],
+			['https://www.youtube.com/channel/UCjOItCJ9TyNphWlEoUR7cIw', 9],
+			['https://www.instagram.com/imeshchamara/', 12],
+			['https://plus.google.com/u/0/115820475043722713439', 11],
+			['https://github.com/IC-Tech', 7],
+			['https://discord.gg/CAmERp2', 10]
+		]
 	}
 	IAU.update('user', user)
 	winsize()
