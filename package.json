@@ -1,12 +1,11 @@
 {
   "name": "201908221129",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project 201908221129 (IC-Tech)",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production --config webpack.config.pro.js",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js",
-    "dev-server": "nodemon api/users.js"
+    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js"
   },
   "keywords": [],
   "author": "Imesh Chamara <imesh1chamara@gmail.com> (http://ic-tech.dx.am/)",
@@ -32,5 +31,13 @@
   },
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IC-Tech/201908221129.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IC-Tech/201908221129/issues"
+  },
+  "homepage": "https://github.com/IC-Tech/201908221129#readme"
 }
