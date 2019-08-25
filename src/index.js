@@ -4,6 +4,7 @@ import './style.scss'
 import './icApp.js'
 import './loading-ani.css'
 import {IAC, IAU} from './icApp-creator.js'
+import {XHR} from './common.js'
 
 const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
 const Theme = {
@@ -11,6 +12,7 @@ const Theme = {
 }
 
 ic.init = icApp => {
+const API_Server = JSON.parse(process.env.__IC_DEV__) == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
 Theme.set('red')
@@ -38,7 +40,7 @@ IAC.create(icApp, _root_, [
 				{ t: 'div', cl: 'c1', iaur: ['user', a => ({s: {backgroundImage: `url(${a.v.image ? a.v.image : ''})`}})] },
 				{ t: 'div', cl: 'c2', ch: [
 					{ t: 'span', cl: 'c1', iau: ['user', a=> a.e.txt = a.v.name] },
-					{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], iaur: ['user', a=> ({ txt: a.v.bio, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))})] }
+					{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], iaur: ['user', a=> ({ txt: a.v.about, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))})] }
 				]},
 				ic.whenReady == undefined ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 					{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
@@ -69,7 +71,7 @@ setTimeout(a=> {
 	IAU.update('UI', 0)
 	var user = {
 		name: 'Imesh Chamara',
-		bio: `I' m seventeen old boy from Sri Lanka.
+		about: `I' m seventeen old boy from Sri Lanka.
 Doing coding stuff all the day with no purpose.
 I used to make software for Windows and Linux computers.
 Also now I make Websites and Web Apps that can used in any devices.
