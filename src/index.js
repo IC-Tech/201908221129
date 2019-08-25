@@ -66,34 +66,12 @@ IAC.create(icApp, _root_, [
 ])
 const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
 window.addEventListener('resize', winsize)
+IAU.didUpdate = a => winsize()
 IAU.update('UI', 1)
 setTimeout(a=> {
-	IAU.update('UI', 0)
-	var user = {
-		name: 'Imesh Chamara',
-		about: `I' m seventeen old boy from Sri Lanka.
-Doing coding stuff all the day with no purpose.
-I used to make software for Windows and Linux computers.
-Also now I make Websites and Web Apps that can used in any devices.
-
-Things I Like: Programming, Japanese-Music, Japan.
-Things I Don't Like: Alcohol, Drugs, Violence, Travelings.
-
-Used Coding Languages: C, VB, C#, C++, HTML, PHP, Javascript (Both Server-side and Client-side), css, babel, sass
-`,
-		image: 'https://i.imgur.com/Pl6pbVF.jpg',
-		links: [
-			['http://ic-tech.dx.am', 8],
-			['mailto:imesh1chamara@gmail.com', 5],
-			['https://twitter.com/_Imesh_Chamara_', 6],
-			['https://www.youtube.com/channel/UCjOItCJ9TyNphWlEoUR7cIw', 9],
-			['https://www.instagram.com/imeshchamara/', 12],
-			['https://plus.google.com/u/0/115820475043722713439', 11],
-			['https://github.com/IC-Tech', 7],
-			['https://discord.gg/CAmERp2', 10]
-		]
-	}
-	IAU.update('user', user)
-	winsize()
+	XHR(API_Server + 'get?id=' + 1, user => {
+		IAU.update('user', user.response)
+		IAU.update('UI', 0)
+	})
 }, 1200)
 }
