@@ -43,9 +43,8 @@ module.exports = {
     }),
     new CopyPlugin([
       {
-        from: 'src/public/*',
-        to: './',
-        flatten: true
+        from: 'src/public',
+        to: './'
       }
     ]),
     new webpack.DefinePlugin({
