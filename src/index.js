@@ -3,7 +3,6 @@ import './Themes.css'
 import './style.scss'
 import './icApp.js'
 import './loading-ani.css'
-import {IAC, IAU} from './icApp-creator.js'
 import {IAR} from './icApp-render.js'
 import {XHR, Host} from './common.js'
 
