@@ -8,7 +8,8 @@ const outputDirectory = 'public';
 
 module.exports = {
   entry: {
-    'ic-tech': './src/index.js'
+    'ic-tech': './src/index.js',
+    'signin': './src/signin.js'
   },
   output: {
     path: path.join(__dirname, outputDirectory),
@@ -39,6 +40,13 @@ module.exports = {
       template: './src/public/index.html',
       filename: 'index.html',
       chunks: ['ic-tech', 'vendor'],
+      favicon: './src/public/favicon.ico'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'IC-Tech',
+      template: './src/public/index.html',
+      filename: 'signin.html',
+      chunks: ['signin', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new CopyPlugin([
