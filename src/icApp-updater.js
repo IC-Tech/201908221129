@@ -11,8 +11,19 @@ class _a {
 }
 const icAppUpdater = {
 	a: new _a(),
-	link: (a, b) => ([a = [a, _a.a.a.indexOf(a)], _a.a.a[a[1] = a[1] == -1 ? _a.a.a.length : a[1]] = a[0], _a.a.b[a[1]] ? _a.a.b[a[1]].push(b) : _a.a.b[a[1]] = [b], a[1] +','+ (_a.a.b[a[1]].length - 1)])[3],
-	update: (a, b) => (a = _a.a.a.indexOf(a)) != -1 && (icAppUpdater.willUpdate ? icAppUpdater.willUpdate(a,b) != false : true) ? [_a.a.b[a].forEach((c,d)=> c({i:[a,d], e: new ic.icApp.e(`[data-iau="${a},${d}"]`), v:b})), icAppUpdater.didUpdate ? icAppUpdater.didUpdate() : 0] : 0,
+	b: 0,
+	link: a => ([
+		a = [a, 'ice_'+ (icAppUpdater.b++).toString(16)],
+		a[0].forEach(b => [
+			b = [b, _a.a.a.indexOf(b[0])],
+			_a.a.a[b[1] = b[1] == -1 ? _a.a.a.length : b[1]] = b[0][0],
+			_a.a.b[b[1]] ? 0 : _a.a.b[b[1]] = [],
+			_a.a.b[b[1]].push([a[1], b[0][1]])
+		]),
+		a[1]
+	])[2],
+	update: a => Object.keys(a).forEach(b => 
+		(b = [b, _a.a.a.indexOf(b)])[1] != -1 && (icAppUpdater.willUpdate ? icAppUpdater.willUpdate(a) != false : true) ? [ _a.a.b[b[1]].forEach(c => c[1]({i:[_a.a.a[b[1]], c[0]], e: new ic.icApp.e(`[data-iau="${c[0]}"]`), v:a[b[0]]})), icAppUpdater.didUpdate ? icAppUpdater.didUpdate() : 0] : 0),
 	didUpdate: null,
 	willUpdate: null
 }
