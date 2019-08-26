@@ -5,17 +5,27 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production --config webpack.config.pro.js",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js"
+    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --config webpack.config.dev.js",
+    "test": "bundlesize",
+    "lh": "lighthousebot"
   },
+  "bundlesize": [
+    {
+      "path": "./public/*.js",
+      "maxSize": "30 kB"
+    }
+  ],
   "keywords": [],
   "author": "Imesh Chamara <imesh1chamara@gmail.com> (http://ic-tech.dx.am/)",
   "license": "ISC",
   "devDependencies": {
+    "bundlesize": "^0.18.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "lighthousebot": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -28,7 +38,8 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "serve": "^11.1.0"
   },
   "repository": {
     "type": "git",
