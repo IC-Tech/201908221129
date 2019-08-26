@@ -1,3 +1,4 @@
+/* Copyright © Imesh Chamara 2019 */
 const Host = a => location.origin + '/'
 const ReloadError = (e, f) => (f ? f : alert)(e)
 const XHR = (url, call, op, data) => {

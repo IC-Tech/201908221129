@@ -1,3 +1,4 @@
+/* Copyright © Imesh Chamara 2019 */
 'use strict';
 import './icApp.js'
 const icApp = ic.icApp
