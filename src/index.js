@@ -41,8 +41,7 @@ class ICTech extends IAR {
 		window.addEventListener('resize', this.winsize)
 	}
 	didUpdate() {
-		if(this.winsize)
-			this.winsize()
+		if(this.winsize) this.winsize()
 	}
 	render() {
 		return (
@@ -63,10 +62,10 @@ class ICTech extends IAR {
 							]},
 							{ t: 'div', cl: 'c2', ch: [
 								{ t: 'a', at: [['href', '/']], html: icons[0] },
-								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[1] },
-								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[2] },
-								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[3] },
-								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[4] }
+								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[1] },
+								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[2] },
+								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[3] },
+								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[4] }
 							]}
 						]},
 					]}
