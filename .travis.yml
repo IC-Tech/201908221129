@@ -3,7 +3,9 @@ node_js:
   - "8.1.3"
 install:
   - npm install
-before_script:
-  - npm install -g firebase-tools
 script:
-  - webpack --mode production --config webpack.config.pro.js
+  - npm run build
+after_success:
+  - npm test
+  - npm run lh -- https://ic-tech.ic-tech.now.sh
+  - npm run lh -- https:/ic-tech.now.sh
