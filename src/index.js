@@ -4,6 +4,7 @@ import './style.scss'
 import './icApp.js'
 import './loading-ani.css'
 import {IAC, IAU} from './icApp-creator.js'
+import {IAR} from './icApp-render.js'
 import {XHR} from './common.js'
 
 const ColorThemes = [ 'red','pink','purple','indeigo','blue','teal','yellow','orange','green','black' ]
@@ -33,45 +34,54 @@ const icons = [
 	'<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm-70.7 372c-68.8 0-124-55.5-124-124s55.2-124 124-124c31.3 0 60.1 11 83 32.3l-33.6 32.6c-13.2-12.9-31.3-19.1-49.4-19.1-42.9 0-77.2 35.5-77.2 78.1s34.2 78.1 77.2 78.1c32.6 0 64.9-19.1 70.1-53.3h-70.1v-42.6h116.9c1.3 6.8 1.9 13.6 1.9 20.7 0 70.8-47.5 121.2-118.8 121.2zm230.2-106.2v35.5H372v-35.5h-35.5v-35.5H372v-35.5h35.5v35.5h35.2v35.5h-35.2z"></path></svg>',
 	'<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg>'
 ]
-IAC.create(icApp, _root_, [
-	{ t: 'div', cl: 'ICApp', ch: [
-		{ t: 'div', cl: ['ICPage', 'Main', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none'], ch: [
-			{ t: 'div', ch: [
-				{ t: 'div', cl: 'c1', iaur: ['user', a => ({s: {backgroundImage: `url(${a.v.image ? a.v.image : ''})`}})] },
-				{ t: 'div', cl: 'c2', ch: [
-					{ t: 'span', cl: 'c1', iau: ['user', a=> a.e.txt = a.v.name] },
-					{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], iaur: ['user', a=> ({ txt: a.v.about, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))})] }
-				]},
-				ic.whenReady == undefined ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
-					{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
-					{ t: 'div', cl: 'c1', ch: [
-						{ t: 'div' },
-						{ t: 'div' },
-						{ t: 'div' }
-					]},
-					{ t: 'div', cl: 'c2', ch: [
-						{ t: 'a', at: [['href', '/']], html: icons[0] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[1] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[2] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[3] },
-						{ t: 'a', e: [['click', a => console.log(a)]], html: icons[4] }
+class ICTech extends IAR {
+	constructor() {
+		super()
+		console.log(this)
+		/*const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
+		window.addEventListener('resize', winsize)
+		IAU.didUpdate = a => winsize()
+		IAU.update('UI', 1)
+		setTimeout(a=> {
+			XHR(API_Server + 'get?id=' + 1, user => {
+				IAU.update('user', user.response)
+				IAU.update('UI', 0)
+			})
+		}, 1200)*/
+	}
+	render() {
+		return (
+			{ t: 'div', cl: 'ICApp', ch: [
+				{ t: 'div', cl: ['ICPage', 'Main', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 0 ? 'flex' : 'none'], ch: [
+					{ t: 'div', ch: [
+						{ t: 'div', cl: 'c1', iaur: ['user', a => ({s: {backgroundImage: `url(${a.v.image ? a.v.image : ''})`}})] },
+						{ t: 'div', cl: 'c2', ch: [
+							{ t: 'span', cl: 'c1', iau: ['user', a=> a.e.txt = a.v.name] },
+							{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], iaur: ['user', a=> ({ txt: a.v.about, ch: a.v.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))})] }
+						]},
+						ic.whenReady == undefined ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
+							{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
+							{ t: 'div', cl: 'c1', ch: [
+								{ t: 'div' },
+								{ t: 'div' },
+								{ t: 'div' }
+							]},
+							{ t: 'div', cl: 'c2', ch: [
+								{ t: 'a', at: [['href', '/']], html: icons[0] },
+								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[1] },
+								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[2] },
+								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[3] },
+								{ t: 'a', e: [['click', a => console.log(a)]], html: icons[4] }
+							]}
+						]},
 					]}
 				]},
+				{ t: 'div', cl: ['ICPage', 'load', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 1 ? 'flex' : 'none'], ch: [
+					{ t:'div', cl: 'loading-ani' }
+				]}
 			]}
-		]},
-		{ t: 'div', cl: ['ICPage', 'load', 'c1'], iau: ['UI', a=> a.e.st.display= a.v == 1 ? 'flex' : 'none'], ch: [
-			{ t:'div', cl: 'loading-ani' }
-		]}
-	]}
-])
-const winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
-window.addEventListener('resize', winsize)
-IAU.didUpdate = a => winsize()
-IAU.update('UI', 1)
-setTimeout(a=> {
-	XHR(API_Server + 'get?id=' + 1, user => {
-		IAU.update('user', user.response)
-		IAU.update('UI', 0)
-	})
-}, 1200)
+		)
+	}
+}
+new ICTech().mount(_root_)
 }
