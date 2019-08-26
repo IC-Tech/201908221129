@@ -20,7 +20,8 @@ class ICTech extends IAR {
 		this.data = {
 			UI: 0,
 			icons: false,
-			user: null
+			user: null,
+			selfView: true
 		}
 		setTimeout(async a=> {
 			icons = []
@@ -57,9 +58,9 @@ class ICTech extends IAR {
 							]},
 							{ t: 'div', cl: 'c2', ch: [
 								{ t: 'a', at: [['href', '/']], html: icons[0] },
+								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, e: [['onclick', a => this.update({UI: 1})]], html: icons[3] },
+								{ t: 'a', s: {display: this.data.selfView ? 'none' : 'block'}, at: [['href', '/']], html: icons[2] },
 								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[1] },
-								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[2] },
-								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[3] },
 								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[4] }
 							]}
 						]},
@@ -67,7 +68,8 @@ class ICTech extends IAR {
 				]},
 				{ t: 'div', cl: ['ICPage', 'load', 'c1'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
 					{ t:'div', cl: 'loading-ani' }
-				]}
+				]},
+				{ t: 'div', cl: ['ICPage', 'edit', 'c1'], s: {display: this.data.UI == 2 ? 'flex' : 'none'} }
 			]}
 		)
 	}
