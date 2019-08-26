@@ -7,11 +7,13 @@ const XHR = (url, call, op, data) => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState == 4 && xhr.status != 0) {
       if(xhr.response) {
+        var v
         try {
-          call(op && op.raw ? xhr.response : JSON.parse(xhr.response))
+          v = op && op.raw ? xhr.response : JSON.parse(xhr.response)
         } catch(e) {
           ReloadError('Server response error. (EC: 0xA2 >>> ' + e + ' <)', op && op.err ? op.err : undefined)
         }
+        call(v)
       }
       else
         ReloadError('Server response error. (EC: 0xA1)', op && op.err ? op.err : undefined)
