@@ -29,7 +29,9 @@ const icApp = {
 		get st() { return this.v.style }
 		get d() { return this.v.dataset }
 		set stp(v) { this.st.setProperty(v[0], v[1]) }
+		get txt() { return this.v.innerText }
 		set txt(v) { this.v.innerText = v }
+		get html() { return this.v.innerHTML }
 		set html(v) { this.v.innerHTML = v }
 		sa(n,v) {this.v.setAttribute(n,v); return this }
 		ae(n,f) { this.v.addEventListener(n,f); return this }
