@@ -10,6 +10,8 @@ import {inputUI, dialogUI} from './IC-UI.js'
 import {XHR, Host} from './common.js'
 
 ic.init = icApp => {
+const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__)
+if(__IC_DEV__) window.__IC_DEV__ = {}
 const API_Server = JSON.parse(process.env.__IC_DEV__) == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
@@ -24,7 +26,10 @@ const ServerErr = a => dialogUI.create({name: 'Server Error', msg: `Error detect
 	else window.close()
 }})
 const defaultWait = 1200
-class ICTech extends IAR {
+
+var icons = null
+
+class SignIn extends IAR {
 	constructor() {
 		super()
 		this.data = {
@@ -33,11 +38,36 @@ class ICTech extends IAR {
 		}
 		this.submit = this.submit.bind(this)
 		this.cancel = this.cancel.bind(this)
-		setTimeout(async a=> {
-			this.update({UI: 1})
-		}, defaultWait)
+		if(__IC_DEV__) window.__IC_DEV__.SignIn = this
 	}
 	didMount() {
+		var _a = new icApp.e('.load span')
+		_a.txt = 'Reduce the loading impact.'
+		setTimeout(async a=> {
+			icons = []
+			_a.txt = 'Downloading the page.'
+			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			var c = a=> {
+				a = [a, 0]
+				while(a[0] >= 1024) {
+					a[1]++;
+					a[0] = a[0] / 1024
+				}
+				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
+			}
+			var d = 0
+			const _icons = [13, 14]
+			for(var a=0; a<_icons.length; a++) {
+				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
+					icons[a] = await b(_icons[a])
+					d += icons[a].length
+					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
+				}
+				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
+			}
+			_a.txt = 'Building the Page'
+			this.update({UI: 1})
+		}, defaultWait)
 	}
 	didUpdate() {
 		icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
@@ -50,11 +80,15 @@ class ICTech extends IAR {
 			if(this.data.state == 0)
 				XHR(API_Server + encodeURI('exists?' + _a('email')), a=> {
 					if(!a.success) return ServerErr(a.error)
-					this.update({state: a.response ? 1 : 2, UI: 1})
+					this.update({state: 1, UI: a.response ? 1 : 2})
 				})
 			else if(this.data.state == 1)
 				XHR(API_Server + encodeURI('signin?' + _a('email') + '&' + _a('password')), a=> {
-					if(!a.success) return ServerErr(a.error)
+					if(!a.success) {
+						if(a.error.indexOf('wrong password') >= 0) this.update({UI: 3})
+						else ServerErr(a.error)
+						return 
+					}
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
 					location = Host()
 				})
@@ -75,16 +109,17 @@ class ICTech extends IAR {
 		return (
 			{ t: 'div', cl: 'ICApp', ch: [
 				{ t: 'div', cl: ['ICPage', 'load'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
-					{ t:'div', cl: 'loading-ani' }
+					{ t:'div', cl: 'loading-ani' },
+					{ t:'span', cl: 'c2', txt: ' ' }
 				]},
-				{ t: 'div', cl: ['ICPage', 'Main'], s: {display: this.data.UI == 1 ? 'flex' : 'none'}, ch: [
+				{ t: 'div', cl: ['ICPage', 'Main', 'c1'], s: {display: this.data.UI == 1 ? 'flex' : 'none'}, ch: [
 					{ t: 'div', ch: [
 						{ t: 'form', e: [['onsubmit', this.submit]], ch: [
-							{ t: 'span', txt: 'Signin to IC-Tech' },
+							{ t: 'span', cl: 'c1', txt: 'Signin to IC-Tech' },
 							inputUI({id: 'email', type: 'email', name: 'Email', readonly: this.data.state != 0}),
 							inputUI({id: 'password', type: 'password', name: 'Password', s: {display: this.data.state != 0 ? 'block' : 'none'} }),
 							inputUI({id: 'name', type: 'name', name: 'Name', s: {display: this.data.state == 2 ? 'block' : 'none'}}),
-							{ t: 'span', cl: 'c1', s: {display: stateMsg[this.data.state] ? 'block' : 'none'}, txt: stateMsg[this.data.state] },
+							{ t: 'span', cl: ['c2', 'cont'], s: {display: stateMsg[this.data.state] ? 'block' : 'none'}, txt: stateMsg[this.data.state] },
 							{ t: 'div', cl: 'c1', s: {paddingTop: '12px'}, ch: [
 								{ t: 'input', cl: ['ic-btn0', 's1'], at: [['type', 'submit'], ['value', 'NEXT']]},
 								{ t: 'button', cl: 'ic-btn0', txt: 'CANCEL', e: [['onclick', this.cancel]], s: {display: this.data.state != 0 ? 'block' : 'none'} }
@@ -92,12 +127,29 @@ class ICTech extends IAR {
 						]}
 					]}
 				]},
-				{ t: 'div', cl: ['ICPage', 'c1'], s: {display: this.data.UI == 2 ? 'flex' : 'none'}, ch: [
-					{ t:'span', txt: 'loading-ani' }
+				{ t: 'div', cl: ['ICPage', 'c1', 'c2'], s: {display: this.data.UI == 2 ? 'flex' : 'none'}, ch: [
+					{ t:'div', ch: [
+						{ t:'span', cl: 'c3', txt: `We don't have account for that email address. You can create new account for that email. If your have submit a wrong email, you can correct and try again.` },
+						{ t:'div', ch: [
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 2})]], txt: 'Create New Account'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 0})]], txt: 'Change Email'}
+						]}
+					]}
+				]},
+				{ t: 'div', cl: ['ICPage', 'c1', 'c2'], s: {display: this.data.UI == 3 ? 'flex' : 'none'}, ch: [
+					{ t:'div', ch: [
+						{ t: 'span', cl: 'c1', txt: 'Signin to IC-Tech' },
+						{t: 'div', cl: 'ico', html: icons ? icons[0] : undefined},
+						{t: 'span', cl: 'c2', txt: 'Wrong Password'},
+						{ t:'div', ch: [
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 2})]], txt: 'Reset Password'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 0})]], txt: 'Retry'}
+						]}
+					]}
 				]}
 			]}
 		)
 	}
 }
-new ICTech().mount(_root_.v)
+new SignIn().mount(_root_.v)
 }
