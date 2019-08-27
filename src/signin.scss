@@ -10,6 +10,9 @@ $default-transition: .3s;
   justify-content: center;
 }
 .Main {
+  /*background-image: url('/assets/back-0.jpg');
+  background-size: cover;
+  background-position: center top;*/
 	> div, &, form {
 		display: flex;
 		flex-direction: column;
