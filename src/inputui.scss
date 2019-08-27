@@ -1,0 +1,51 @@
+/* Copyright © Imesh Chamara 2019 */
+$default-transition: .3s;
+@function col($v) {
+  @return unquote("rgb(var(--ic-c-#{$v}))");
+}
+.inputui {
+	display: block;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	margin-top: 18px;
+}
+.inputui label:not(.c1) {
+	display: block;
+	position: absolute;
+	color: col(i3);
+	font-size: 16px;
+	margin: 8px 0 0 4px;
+	pointer-events: none;
+	-webkit-transition-duration: $default-transition;
+	     -o-transition-duration: $default-transition;
+	        transition-duration: $default-transition;
+}
+.inputui.s1 label:not(.c1) {
+	margin: -16px 0 0 0;
+	font-size: 12px;
+}
+.inputui.s2 label:not(.c1) {
+	margin: 8px 0 0 4px;
+	font-size: 16px;
+}
+.inputui textarea, .inputui input {
+	display: block;
+	border: 2px solid rgba(255, 255, 255, 0);
+	color: #000;
+	padding: 6px 2px;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	border-bottom-color: rgb(158, 158, 158);
+	font-size: 16px;
+	margin: 0;
+}
+.inputui textarea:focus, .inputui input:focus {
+	border-bottom-color: col(i3);
+}
+.inputui textarea {
+	resize: none;
+	overflow: hidden;
+	height: 35px;
+}
