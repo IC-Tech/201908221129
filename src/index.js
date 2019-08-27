@@ -36,9 +36,12 @@ class ICTech extends IAR {
 			icons = []
 			_a.txt = 'Downloading the page.'
 			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			var c = b=> b + (['bytes', 'KB', 'MB', 'GB'])[(a => { a = [a, 0]; while(a[0] >= 1024) { a[1]++; a[0] = a[0] / 1024 }; return a[1] })(b)]
+			var d = 0
 			for(var a=0; a<13; a++) {
 				icons[a] = await b(a)
-				_a.txt = `Downloading the page ${parseInt(a / 13 * 100)}%.`
+				d += icons[a].length
+				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / 13 * 100)}%.`
 			}
 			_a.txt = 'Connecting to the IC-Tech server.'
 			XHR(API_Server + 'get?id=' + 1, user => {
