@@ -53,4 +53,35 @@ body, html {
   .loading-ani {
     margin: 0 auto;
   }
+  .ic-btn0 {
+    display: inline-block;
+    border: 0;
+    margin: 4px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: col(i3);
+    font-size: 14px;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.46);
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.46);
+    color: rgb(255, 255, 255);
+    -webkit-transition-duration: .3s;
+         -o-transition-duration: .3s;
+            transition-duration: .3s;
+    text-decoration: none;
+  }
+  .ic-btn0.s1 {
+    background-color: col(i5);
+  }
+  .ic-btn0:not(.dis):active {
+    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.46);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.46);
+    background-color: col(i4);
+  }
+  .ic-btn0:not(.dis):active {
+    background-color: col(i7);
+  }
+  .ic-btn0.dis {
+    background-color: rgb(187, 187, 187);
+  }
 }
