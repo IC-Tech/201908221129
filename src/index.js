@@ -7,7 +7,8 @@ import {IAR} from './icApp-render.js'
 import {XHR, Host} from './common.js'
 
 ic.init = icApp => {
-const API_Server = JSON.parse(process.env.__IC_DEV__) == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
+const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__)
+const API_Server = __IC_DEV__ == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
 Theme.set('red')
@@ -49,7 +50,7 @@ class ICTech extends IAR {
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
 							{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], ch: this.data.user ? [{t: 'span', txt: this.data.user.about}, ...this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))] : undefined }
 						]},
-						!this.data.icons ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
+						!this.data.icons || !__IC_DEV__ ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 							{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
 							{ t: 'div', cl: 'c1', ch: [
 								{ t: 'div' },
