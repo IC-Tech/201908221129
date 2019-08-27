@@ -4,41 +4,74 @@ $default-transition: .3s;
   @return unquote("rgb(var(--ic-c-#{$v}))");
 }
 @import 'main.scss';
-.ICPage.load {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.Main {
-  /*background-image: url('/assets/back-0.jpg');
-  background-size: cover;
-  background-position: center top;*/
-	> div, &, form {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-	> div {
-    background-color: #fff;
-		width: 80%;
-		max-width: 400px;
-		padding: 10px 20px;
-		border-radius: 8px;
-		box-shadow: 0 0 26px #0006;
-		margin: 0 auto;
-	}
-  form {
-    > span {
-      font-size: 24px;
+.ICPage {
+  span {
+    text-align: center;
+    &.c1 {
       color: col(i7);
-      text-align: center;
-      &.c1 {
-        font-size: 14px;
-        padding: 10px 0;
+      font-size: 24px !important;
+    }
+    &.c2 {
+      color: col(i7);
+      font-size: 14px !important;
+      padding: 10px 0;
+    }
+    &.c3 {
+      font-size: 19px;
+    }
+  }
+  &.load {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    span {
+      color: #000;
+    }
+  }
+  &.c1 {
+    > div, &, form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    > div {
+      width: 80%;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 26px #0006;
+    }
+    &.c2 {
+      > div {
+        > div {
+          padding-top: 16px;
+          width: 100%;
+          max-width: 280px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 0 auto;
+        }
       }
     }
-    .ic-btn0 {
-    	float: right;
+  }
+  &.Main {
+    /*background-image: url('/assets/back-0.jpg');
+    background-size: cover;
+    background-position: center top;*/
+    form {
+      .ic-btn0 {
+        float: right;
+      }
+    }
+  }
+  .ico {
+    width: 80% !important;
+    max-width: 200px !important;
+    svg {
+      color: col(i5);
     }
   }
 }
