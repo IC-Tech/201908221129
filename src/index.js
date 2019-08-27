@@ -8,6 +8,7 @@ import {XHR, Host} from './common.js'
 
 ic.init = icApp => {
 const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__)
+if(__IC_DEV__) window.__IC_DEV__ = {}
 const API_Server = __IC_DEV__ == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
@@ -24,18 +25,27 @@ class ICTech extends IAR {
 			user: null,
 			selfView: true
 		}
-		setTimeout(async a=> {
-			icons = []
-			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
-			for(var a=0; a<13; a++) icons[a] = await b(a)
-			XHR(API_Server + 'get?id=' + 1, user => {
-				this.update({UI: 1, icons: 1, user: user.response})
-			})
-		}, 1200)
+		if(__IC_DEV__) window.__IC_DEV__.ICTech = this
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
 		window.addEventListener('resize', this.winsize)
+		var _a = new icApp.e('.load span')
+		_a.txt = 'Reduce the loading impact.'
+		setTimeout(async a=> {
+			icons = []
+			_a.txt = 'Downloading the page.'
+			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			for(var a=0; a<13; a++) {
+				icons[a] = await b(a)
+				_a.txt = `Downloading the page ${parseInt(a / 13 * 100)}%.`
+			}
+			_a.txt = 'Connecting to the IC-Tech server.'
+			XHR(API_Server + 'get?id=' + 1, user => {
+				_a.txt = 'Building the Page.'
+				this.update({UI: 1, icons: 1, user: user.response})
+			})
+		}, 1200)
 	}
 	didUpdate() {
 		if(this.winsize) this.winsize()
@@ -68,7 +78,8 @@ class ICTech extends IAR {
 					]}
 				]},
 				{ t: 'div', cl: ['ICPage', 'load', 'c1'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
-					{ t:'div', cl: 'loading-ani' }
+					{ t:'div', cl: 'loading-ani' },
+					{ t:'span', txt: '' },
 				]},
 				{ t: 'div', cl: ['ICPage', 'edit', 'c1'], s: {display: this.data.UI == 2 ? 'flex' : 'none'} }
 			]}
