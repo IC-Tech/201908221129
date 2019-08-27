@@ -12,7 +12,13 @@ $default-transition: .3s;
     justify-content: center;
   }
 }
-
+.load {
+  span {
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+}
 .Main {
   background-color: #eee;
   > div {
