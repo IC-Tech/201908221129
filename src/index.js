@@ -4,12 +4,10 @@ import './icApp.js'
 import './loading-ani.css'
 import {Theme} from './Theme.js'
 import {IAR} from './icApp-render.js'
-import {XHR, Host} from './common.js'
+import {XHR, Host, API, IC_DEV} from './common.js'
+import {getUser} from './user.js'
 
 ic.init = icApp => {
-const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__)
-if(__IC_DEV__) window.__IC_DEV__ = {}
-const API_Server = __IC_DEV__ == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
 Theme.set('red')
@@ -25,7 +23,7 @@ class ICTech extends IAR {
 			user: null,
 			selfView: true
 		}
-		if(__IC_DEV__) window.__IC_DEV__.ICTech = this
+		if(IC_DEV) window.__IC_DEV__.ICTech = this
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
@@ -54,7 +52,7 @@ class ICTech extends IAR {
 				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / 13 * 100)}%.`
 			}
 			_a.txt = 'Connecting to the IC-Tech server.'
-			XHR(API_Server + 'get?id=' + 1, user => {
+			XHR(API + 'get?id=' + 1, user => {
 				_a.txt = 'Building the Page.'
 				this.update({UI: 1, icons: 1, user: user.response})
 			})
@@ -73,7 +71,7 @@ class ICTech extends IAR {
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
 							{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], ch: this.data.user ? [{t: 'span', txt: this.data.user.about}, ...this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))] : undefined }
 						]},
-						!this.data.icons || !__IC_DEV__ ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
+						!this.data.icons || !IC_DEV ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
 							{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
 							{ t: 'div', cl: 'c1', ch: [
 								{ t: 'div' },
