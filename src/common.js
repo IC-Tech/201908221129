@@ -1,5 +1,8 @@
 /* Copyright © Imesh Chamara 2019 */
 const Host = a => location.origin + '/'
+const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__) == true
+if(__IC_DEV__ && !window.__IC_DEV__) window.__IC_DEV__ = {}
+const API_Server = __IC_DEV__ == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 const ReloadError = (e, f) => (f ? f : alert)(e)
 const XHR = (url, call, op, data) => {
    // eslint-disable-next-line no-undef
@@ -33,4 +36,4 @@ const pram = (a, b) => {
 }
 const mobile = a => ([a = [navigator.userAgent.toLowerCase(), 0], ['android','webos','iphone','ipad','ipod','blackberry','iemobile','opera mini'].forEach(b=> a[1] == 0 && a[0].indexOf(b) >= 0 ? (a[1] = 1) : 0)])[0][1] == 1
 
-export {XHR, pram, mobile, Host}
+export {XHR, pram, mobile, Host, API_Server as API, __IC_DEV__ as IC_DEV}
