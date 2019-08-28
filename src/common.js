@@ -1,5 +1,5 @@
 /* Copyright © Imesh Chamara 2019 */
-const Host = a => location.origin + '/'
+const Host = location.origin + '/'
 const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__) == true
 if(__IC_DEV__ && !window.__IC_DEV__) window.__IC_DEV__ = {}
 const API_Server = __IC_DEV__ == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
