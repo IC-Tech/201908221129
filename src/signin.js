@@ -7,12 +7,11 @@ import './inputui.scss'
 import {Theme} from './Theme.js'
 import {IAR} from './icApp-render.js'
 import {inputUI, dialogUI} from './IC-UI.js'
-import {XHR, Host} from './common.js'
+import {XHR, Host, API, IC_DEV} from './common.js'
+import {getUser, setUser} from './user.js'
+import {ShowErr} from './error.js'
 
 ic.init = icApp => {
-const __IC_DEV__ = JSON.parse(process.env.__IC_DEV__)
-if(__IC_DEV__) window.__IC_DEV__ = {}
-const API_Server = JSON.parse(process.env.__IC_DEV__) == true ? 'http://192.168.8.20:3001/' : 'https://users.ic-tech.now.sh/'
 var _root_ = new icApp.e('#root')
 _root_.chr()
 Theme.set('red')
@@ -21,10 +20,6 @@ const stateMsg = [
 	`Enter your email to signin. If you don't have one, you can create new account by submit your email.`,
 	`Enter your password to signin. If this isn't your account click cancel button.`
 ]
-const ServerErr = a => dialogUI.create({name: 'Server Error', msg: `Error detected in server. ${a ? '' : 'No '}Error information${a ? (b => [a.forEach((a,c) => b += (c == 0 ? '' : ', ') + a), b])(': ')[1] : ' Provided'}.`, but: ['RELOAD', 'CANCEL'], f: a=> {
-	if(a.b == 0) location.reload()
-	else window.close()
-}})
 const defaultWait = 1200
 
 var icons = null
@@ -40,8 +35,9 @@ class SignIn extends IAR {
 		this.submit = this.submit.bind(this)
 		this.cancel = this.cancel.bind(this)
 		this.mail = this.mail.bind(this)
+		this.resign = this.resign.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
-		if(__IC_DEV__) window.__IC_DEV__.SignIn = this
+		if(IC_DEV) window.__IC_DEV__.SignIn = this
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')
@@ -69,7 +65,7 @@ class SignIn extends IAR {
 				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
 			}
 			_a.txt = 'Building the Page'
-			this.update({UI: 1})
+			getUser({f: a => this.update({UI: a ? 5: 1})})
 		}, defaultWait)
 	}
 	didUpdate() {
@@ -77,10 +73,10 @@ class SignIn extends IAR {
 	}
 	mail(t) {
 		this.update({UI: 0, mail: t})
-		setTimeout(a => XHR(API_Server + encodeURI(`send/${t == 1 ? 'verify' : 'reset'}?${this._a('email')}`), a=> {
+		setTimeout(a => XHR(API + encodeURI(`send/${t == 1 ? 'verify' : 'reset'}?${this._a('email')}`), a=> {
 			if(!a.success) {
 				if(a.error.indexOf('Email already verified') >= 0) this.update({UI:0, state: 1})
-				else ServerErr(a.error)
+				else ShowErr(0, a.error)
 				return
 			}
 			this.update({UI: 4})
@@ -91,27 +87,27 @@ class SignIn extends IAR {
 		this.update({UI: 0})
 		setTimeout(a => {
 			if(this.data.state == 0)
-				XHR(API_Server + encodeURI('exists?' + this._a('email')), a=> {
+				XHR(API + encodeURI('exists?' + this._a('email')), a=> {
 					if(!a.success) {
 						if(a.error.indexOf('Email not verified') >= 0) this.mail(1)
-						else ServerErr(a.error)
+						else ShowErr(0, a.error)
 						return
 					}
 					this.update({state: 1, UI: a.response ? 1 : 2})
 				})
 			else if(this.data.state == 1)
-				XHR(API_Server + encodeURI('signin?' + this._a('email') + '&' + this._a('password')), a=> {
+				XHR(API + encodeURI('signin?' + this._a('email') + '&' + this._a('password')), a=> {
 					if(!a.success) {
 						if(a.error.indexOf('wrong password') >= 0) this.update({UI: 3})
-						else ServerErr(a.error)
+						else ShowErr(0, a.error)
 						return 
 					}
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
 					location = Host()
 				})
 			else if(this.data.state == 2)
-				XHR(API_Server + encodeURI('signup?' + this._a('email') + '&' + this._a('password') + '&' + this._a('name')), a=> {
-					if(!a.success) return ServerErr(a.error)
+				XHR(API + encodeURI('signup?' + this._a('email') + '&' + this._a('password') + '&' + this._a('name')), a=> {
+					if(!a.success) return ShowErr(0, a.error)
 					this.mail(1)
 				})
 		}, defaultWait)
@@ -122,6 +118,10 @@ class SignIn extends IAR {
 		this.update({UI: 0})
 		setTimeout(a => this.update({state: 0, UI: 1}), defaultWait)
 		return false
+	}
+	resign() {
+		setUser(null)
+		location.reload()
 	}
 	render() {
 		const _a = a => {this.update({UI:0}); setTimeout(b=>this.update(a), defaultWait)}
@@ -174,6 +174,15 @@ class SignIn extends IAR {
 						{ t:'div', ch: [
 							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.mail(this.data.mail)]], txt: 'Resend Email'},
 							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> _a({UI: 1, state: 1})]], txt: 'Signin'}
+						]}
+					]}
+				]},
+				{ t: 'div', cl: ['ICPage', 'c1', 'c2'], s: {display: this.data.UI == 5 ? 'flex' : 'none'}, ch: [
+					{ t:'div', ch: [
+						{ t:'span', cl: 'c3', txt: `Your have already signin to the IC-Tech. You can continue to the IC-Tech or signout and resign with deferent account.` },
+						{ t:'div', ch: [
+							{t: 'a', cl: ['ic-btn0', 's1'], at: [['href', '/']], txt: 'IC-Tech'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', this.resign]], txt: 'Resign'}
 						]}
 					]}
 				]}
