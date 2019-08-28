@@ -25,9 +25,36 @@ $default-transition: .3s;
       color: #000;
     }
   }
-  > div, & {
+  > div, &, div.c1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  &.c1 {
+    > div {
+      width: 80%;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 26px #0006;
+      .ic-btn0{
+        width: calc(100% - 40px);
+        max-width: 280px;
+        margin: 0 auto;
+      }
+    }
+  }
+  div.c1 {
+    margin-top: 10px;
+  }
+  .ico {
+    width: 80% !important;
+    max-width: 200px !important;
+    margin: 0 auto;
+    svg {
+      color: col(i5);
+    }
   }
 }
