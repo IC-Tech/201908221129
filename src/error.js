@@ -9,7 +9,7 @@ var ShowErr = (b,a) => {
 		else window.close()
 	}})
 	else if(b == 1) dialogUI.create({name: 'Account Error', msg: `You have created account, but your email isn't verified yet. please verify your email.`, but: ['VERIFY', 'CANCEL'], f: a=> {
-		if(a.b == 0) location = Host() + 'signin.html'
+		if(a.b == 0) location = Host + 'signin.html'
 		else window.close()
 	}})
 	else if(b == 2) dialogUI.create({name: 'Account Security Update', msg: `Your account's security have been updated on another browser. You have to resign to the page. if you don't you can't use the App.`, but: ['OK', 'CANCEL'], f: a=> {

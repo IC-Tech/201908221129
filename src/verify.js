@@ -29,7 +29,7 @@ class SignIn extends IAR {
 		setTimeout(async a=> {
 			icons = []
 			_a.txt = 'Downloading the page.'
-			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			var b = a=> new Promise(r => XHR(Host + `assets/${a}.svg`, a => r(a), {raw:1}))
 			var c = a=> {
 				a = [a, 0]
 				while(a[0] >= 1024) {

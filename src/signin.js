@@ -45,7 +45,7 @@ class SignIn extends IAR {
 		setTimeout(async a=> {
 			icons = []
 			_a.txt = 'Downloading the page.'
-			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			var b = a=> new Promise(r => XHR(Host + `assets/${a}.svg`, a => r(a), {raw:1}))
 			var c = a=> {
 				a = [a, 0]
 				while(a[0] >= 1024) {
@@ -103,7 +103,7 @@ class SignIn extends IAR {
 						return 
 					}
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
-					location = Host()
+					location = Host
 				})
 			else if(this.data.state == 2)
 				XHR(API + encodeURI('signup?' + this._a('email') + '&' + this._a('password') + '&' + this._a('name')), a=> {
