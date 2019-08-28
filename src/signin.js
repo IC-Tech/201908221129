@@ -34,10 +34,13 @@ class SignIn extends IAR {
 		super()
 		this.data = {
 			UI: 0,
-			state: 0
+			state: 0,
+			mail: 0
 		}
 		this.submit = this.submit.bind(this)
 		this.cancel = this.cancel.bind(this)
+		this.mail = this.mail.bind(this)
+		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		if(__IC_DEV__) window.__IC_DEV__.SignIn = this
 	}
 	didMount() {
@@ -72,18 +75,32 @@ class SignIn extends IAR {
 	didUpdate() {
 		icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
 	}
+	mail(t) {
+		this.update({UI: 0, mail: t})
+		setTimeout(a => XHR(API_Server + encodeURI(`send/${t == 1 ? 'verify' : 'reset'}?${this._a('email')}`), a=> {
+			if(!a.success) {
+				if(a.error.indexOf('Email already verified') >= 0) this.update({UI:0, state: 1})
+				else ServerErr(a.error)
+				return
+			}
+			this.update({UI: 4})
+		}), defaultWait)
+	}
 	submit(e) {
 		e.preventDefault()
 		this.update({UI: 0})
-		const _a = a => a + '=' + icApp.qs('#' + a).value
 		setTimeout(a => {
 			if(this.data.state == 0)
-				XHR(API_Server + encodeURI('exists?' + _a('email')), a=> {
-					if(!a.success) return ServerErr(a.error)
+				XHR(API_Server + encodeURI('exists?' + this._a('email')), a=> {
+					if(!a.success) {
+						if(a.error.indexOf('Email not verified') >= 0) this.mail(1)
+						else ServerErr(a.error)
+						return
+					}
 					this.update({state: 1, UI: a.response ? 1 : 2})
 				})
 			else if(this.data.state == 1)
-				XHR(API_Server + encodeURI('signin?' + _a('email') + '&' + _a('password')), a=> {
+				XHR(API_Server + encodeURI('signin?' + this._a('email') + '&' + this._a('password')), a=> {
 					if(!a.success) {
 						if(a.error.indexOf('wrong password') >= 0) this.update({UI: 3})
 						else ServerErr(a.error)
@@ -93,8 +110,9 @@ class SignIn extends IAR {
 					location = Host()
 				})
 			else if(this.data.state == 2)
-				XHR(API_Server + encodeURI('signup?' + _a('email') + '&' + _a('password') + '&' + _a('name')), a=> {
+				XHR(API_Server + encodeURI('signup?' + this._a('email') + '&' + this._a('password') + '&' + this._a('name')), a=> {
 					if(!a.success) return ServerErr(a.error)
+					this.mail(1)
 				})
 		}, defaultWait)
 		return false
@@ -106,6 +124,7 @@ class SignIn extends IAR {
 		return false
 	}
 	render() {
+		const _a = a => {this.update({UI:0}); setTimeout(b=>this.update(a), defaultWait)}
 		return (
 			{ t: 'div', cl: 'ICApp', ch: [
 				{ t: 'div', cl: ['ICPage', 'load'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
@@ -131,8 +150,8 @@ class SignIn extends IAR {
 					{ t:'div', ch: [
 						{ t:'span', cl: 'c3', txt: `We don't have account for that email address. You can create new account for that email. If your have submit a wrong email, you can correct and try again.` },
 						{ t:'div', ch: [
-							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 2})]], txt: 'Create New Account'},
-							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 0})]], txt: 'Change Email'}
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> _a({UI: 1, state: 2})]], txt: 'Create New Account'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> _a({UI: 1, state: 0})]], txt: 'Change Email'}
 						]}
 					]}
 				]},
@@ -142,8 +161,19 @@ class SignIn extends IAR {
 						{t: 'div', cl: 'ico', html: icons ? icons[0] : undefined},
 						{t: 'span', cl: 'c2', txt: 'Wrong Password'},
 						{ t:'div', ch: [
-							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 2})]], txt: 'Reset Password'},
-							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.update({UI: 1, state: 0})]], txt: 'Retry'}
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.mail(0)]], txt: 'Reset Password'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> _a({UI: 1, state: 1})]], txt: 'Retry'}
+						]}
+					]}
+				]},
+				{ t: 'div', cl: ['ICPage', 'c1', 'c2'], s: {display: this.data.UI == 4 ? 'flex' : 'none'}, ch: [
+					{ t:'div', ch: [
+						{ t: 'span', cl: 'c1', txt: `${this.data.mail == 1 ? 'Verify' : 'Reset'} Your ${this.data.mail == 1 ? 'Email' : 'Password'}` },
+						{t: 'div', cl: 'ico', html: icons ? icons[1] : undefined},
+						{t: 'span', cl: 'c2', txt: `Check your email and click the button to ${this.data.mail == 1 ? 'activate' : 'Reset'} your ${this.data.mail == 1 ? 'account' : 'password'}.\n\nThe Email system take some time to deliver the email. mostly for the Gmail users. your email will deliver less than in three minute. We apologize for that.`},
+						{ t:'div', ch: [
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> this.mail(this.data.mail)]], txt: 'Resend Email'},
+							{t: 'button', cl: 'ic-btn0', e: [['onclick', a=> _a({UI: 1, state: 1})]], txt: 'Signin'}
 						]}
 					]}
 				]}
