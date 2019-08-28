@@ -75,7 +75,7 @@ class SignIn extends IAR {
 		this.update({UI: 0, mail: t})
 		setTimeout(a => XHR(API + encodeURI(`send/${t == 1 ? 'verify' : 'reset'}?${this._a('email')}`), a=> {
 			if(!a.success) {
-				if(a.error.indexOf('Email already verified') >= 0) this.update({UI:0, state: 1})
+				if(a.error.indexOf('Email already verified') >= 0) this.update({UI:1, state: 1})
 				else ShowErr(0, a.error)
 				return
 			}
@@ -85,6 +85,7 @@ class SignIn extends IAR {
 	submit(e) {
 		e.preventDefault()
 		this.update({UI: 0})
+		var _a = new icApp.e('.load span')
 		setTimeout(a => {
 			if(this.data.state == 0)
 				XHR(API + encodeURI('exists?' + this._a('email')), a=> {
@@ -105,11 +106,14 @@ class SignIn extends IAR {
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
 					location = Host
 				})
-			else if(this.data.state == 2)
+			else if(this.data.state == 2) {
+				_a.txt = 'Creating Account'
 				XHR(API + encodeURI('signup?' + this._a('email') + '&' + this._a('password') + '&' + this._a('name')), a=> {
 					if(!a.success) return ShowErr(0, a.error)
 					this.mail(1)
+					_a.txt = 'Sending Verification Email'
 				})
+			}
 		}, defaultWait)
 		return false
 	}
