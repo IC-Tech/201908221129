@@ -10,7 +10,8 @@ module.exports = {
   entry: {
     'ic-tech': './src/index.js',
     'signin': './src/signin.js',
-    'verify': './src/verify.js'
+    'verify': './src/verify.js',
+    'reset': './src/reset.js'
   },
   output: {
     path: path.join(__dirname, outputDirectory),
@@ -55,6 +56,13 @@ module.exports = {
       template: './src/public/index.html',
       filename: 'verify.html',
       chunks: ['verify', 'vendor'],
+      favicon: './src/public/favicon.ico'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'IC-Tech',
+      template: './src/public/index.html',
+      filename: 'reset.html',
+      chunks: ['reset', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new CopyPlugin([
