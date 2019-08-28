@@ -1,0 +1,73 @@
+/* Copyright © Imesh Chamara 2019 */
+import './verify.scss'
+import './icApp.js'
+import './loading-ani.css'
+import {Theme} from './Theme.js'
+import {IAR} from './icApp-render.js'
+import {XHR, Host, API, IC_DEV} from './common.js'
+import {ShowErr} from './error.js'
+
+ic.init = icApp => {
+var _root_ = new icApp.e('#root')
+_root_.chr()
+Theme.set('red')
+
+const defaultWait = 1200
+var icons = null
+
+class SignIn extends IAR {
+	constructor() {
+		super()
+		this.data = {
+			UI: 0,
+			st: 0
+		}
+	}
+	didMount() {
+		var _a = new icApp.e('.load span')
+		_a.txt = 'Reduce the loading impact.'
+		setTimeout(async a=> {
+			icons = []
+			_a.txt = 'Downloading the page.'
+			var b = a=> new Promise(r => XHR(Host() + `assets/${a}.svg`, a => r(a), {raw:1}))
+			var c = a=> {
+				a = [a, 0]
+				while(a[0] >= 1024) {
+					a[1]++;
+					a[0] = a[0] / 1024
+				}
+				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
+			}
+			var d = 0
+			const _icons = [15, 14]
+			for(var a=0; a<_icons.length; a++) {
+				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
+					icons[a] = await b(_icons[a])
+					d += icons[a].length
+					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
+				}
+				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
+			}
+			_a.txt = 'Building the Page'
+			this.update({UI: 1})
+		}, defaultWait)
+	}
+	render() {
+		return (
+			{ t: 'div', cl: 'ICApp', ch: [
+				{ t: 'div', cl: ['ICPage', 'load'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
+					{ t:'div', cl: 'loading-ani' },
+					{ t:'span', cl: 'c2', txt: ' ' }
+				]},
+				{ t: 'div', cl: ['ICPage', 'Main', 'c1'], s: {display: this.data.UI == 1 ? 'flex' : 'none'}, ch: [
+					{ t: 'div', ch: [
+						{t: 'div', cl: 'ico', html: icons ? icons[this.data.st] : null },
+						{t: 'span', txt: this.data.st == 0 ? `Your account have been activated.` : `Sorry, We can't complete your request. Please request for new link.`}
+					]}
+				]}
+			]}
+		)
+	}
+}
+new SignIn().mount(_root_.v)
+}

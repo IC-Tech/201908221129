@@ -1,0 +1,33 @@
+/* Copyright © Imesh Chamara 2019 */
+$default-transition: .3s;
+@function col($v) {
+  @return unquote("rgb(var(--ic-c-#{$v}))");
+}
+@import 'main.scss';
+.ICPage {
+  span {
+    text-align: center;
+    &.c1 {
+      color: col(i7);
+      font-size: 24px !important;
+    }
+    &.c2 {
+      color: col(i7);
+      font-size: 14px !important;
+      padding: 10px 0;
+    }
+    &.c3 {
+      font-size: 19px;
+    }
+  }
+  &.load {
+    span {
+      color: #000;
+    }
+  }
+  > div, & {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
