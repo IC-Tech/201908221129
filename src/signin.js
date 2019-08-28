@@ -179,7 +179,7 @@ class SignIn extends IAR {
 				]},
 				{ t: 'div', cl: ['ICPage', 'c1', 'c2'], s: {display: this.data.UI == 5 ? 'flex' : 'none'}, ch: [
 					{ t:'div', ch: [
-						{ t:'span', cl: 'c3', txt: `Your have already signin to the IC-Tech. You can continue to the IC-Tech or signout and resign with deferent account.` },
+						{ t:'span', cl: 'c3', txt: `Your have already signin to the IC-Tech. You can continue to the IC-Tech or you can signout and resign with deferent account.` },
 						{ t:'div', ch: [
 							{t: 'a', cl: ['ic-btn0', 's1'], at: [['href', '/']], txt: 'IC-Tech'},
 							{t: 'button', cl: 'ic-btn0', e: [['onclick', this.resign]], txt: 'Resign'}
