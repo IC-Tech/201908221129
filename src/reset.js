@@ -24,7 +24,7 @@ class Reset extends IAR {
 			UI: 0,
 			st: 0
 		}
-		this.reset = this.reset.bind(this)
+		this.submit = this.submit.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		if(IC_DEV) window.__IC_DEV__.Reset = this
 	}
@@ -57,13 +57,15 @@ class Reset extends IAR {
 			d = pram(location.search, 'eid')
 			if(!d) location = Host
 			XHR(API + 'can/reset?eid=' + d, a => {
-				console.log(a)
-				this.update({UI: 1, st: a.success && a.response ? 0 : 1})
+				this.update({UI:  a.success && a.response ? 2 : 1, st:1})
 			})
 		}, defaultWait)
 	}
-	reset() {
-		
+	submit(e) {
+		e.preventDefault()
+		this.update({UI: 0})
+		setTimeout(a => XHR(API + `reset?eid=${pram(location.search, 'eid')}&${this._a('password')}`, a=> this.update({UI: 1, st: a.success && a.response ? 0 : 1})), defaultWait)
+		return false
 	}
 	render() {
 		return (
