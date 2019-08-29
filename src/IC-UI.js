@@ -9,6 +9,7 @@ var inputUI = a => (
 		{t: a.multi ? 'textarea' : 'input', at: [['readonly', a.readonly], ['type', a.type], ['type', a.id], ['id', a.id]], e: [['onfocus', inputUI.check], ['onblur', inputUI.check], ['onchange', inputUI.check], ['oninput', inputUI.check]]}
 ]})
 inputUI.check = a => new icApp.e(a = a.target).p[icApp.d.activeElement == a || a.value != '' ? 'cla' : 'clr']('s1')
+inputUI.checkAll = a => icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
 
 var dialogUI = a => (
 	{t: 'div', cl: ['dialog-container', 'show'], at: [['id', 'ic-dialog-' + a.id]], ch: [
