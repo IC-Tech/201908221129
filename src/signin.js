@@ -141,7 +141,7 @@ class SignIn extends IAR {
 							{ t: 'span', cl: 'c1', txt: 'Signin to IC-Tech' },
 							inputUI({id: 'email', type: 'email', name: 'Email', readonly: this.data.state != 0}),
 							inputUI({id: 'password', type: 'password', name: 'Password', s: {display: this.data.state != 0 ? 'block' : 'none'} }),
-							inputUI({id: 'name', type: 'name', name: 'Name', s: {display: this.data.state == 2 ? 'block' : 'none'}}),
+							inputUI({id: 'name', type: 'text', name: 'Name', s: {display: this.data.state == 2 ? 'block' : 'none'}}),
 							{ t: 'span', cl: ['c2', 'cont'], s: {display: stateMsg[this.data.state] ? 'block' : 'none'}, txt: stateMsg[this.data.state] },
 							{ t: 'div', cl: 'c1', s: {paddingTop: '12px'}, ch: [
 								{ t: 'input', cl: ['ic-btn0', 's1'], at: [['type', 'submit'], ['value', 'NEXT']]},
