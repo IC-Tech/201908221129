@@ -69,7 +69,7 @@ class SignIn extends IAR {
 		}, defaultWait)
 	}
 	didUpdate() {
-		icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
+		inputUI.checkAll()
 	}
 	mail(t) {
 		this.update({UI: 0, mail: t})

@@ -67,6 +67,9 @@ class Reset extends IAR {
 		setTimeout(a => XHR(API + `reset?eid=${pram(location.search, 'eid')}&${this._a('password')}`, a=> this.update({UI: 1, st: a.success && a.response ? 0 : 1})), defaultWait)
 		return false
 	}
+	didUpdate() {
+		inputUI.checkAll()
+	}
 	render() {
 		return (
 			{ t: 'div', cl: 'ICApp', ch: [
