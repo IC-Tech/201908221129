@@ -5,8 +5,8 @@ $default-transition: .3s;
 }
 @import 'main.scss';
 
-#root {
-  .c1{
+.ICApp {
+  >.c1{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -166,6 +166,63 @@ $default-transition: .3s;
     > div {
       width: 100% !important;
       height: auto;
+    }
+  }
+}
+.edit {
+  > div {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 26px #0006;
+    overflow-y: auto;
+    &, form {
+      &, & > *{
+        display: block;
+      }
+    }
+    div.c1 {
+      padding-top: 16px;
+    }
+    .ic-btn0 {
+      float: right;
+    }
+  }
+  span {
+    text-align: center;
+    &.c1 {
+      color: col(i7);
+      font-size: 24px !important;
+    }
+    &.c2 {
+      color: col(i7);
+      font-size: 14px !important;
+      padding: 10px 0;
+    }
+    &.c3 {
+      font-size: 19px;
+    }
+  }
+  .inputui.img {
+    div {
+      width: 78vw;
+      height: 78vw;
+      max-width: 396px;
+      max-height: 396px;
+      border: 2px solid #ccc;
+      margin: 0 auto;
+      background-position: top center;
+      background-size: cover;
+    }
+    .ic-btn0 {
+      display: block;
+      float: inherit;
+      width: 80%;
+      max-width: 260px;
+      margin: 10px auto;
     }
   }
 }
