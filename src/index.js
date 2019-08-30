@@ -1,19 +1,25 @@
 /* Copyright © Imesh Chamara 2019 */
-import './style.scss'
 import './icApp.js'
-import './loading-ani.css'
 import {Theme} from './Theme.js'
+import {dialogUI, inputUI} from './IC-UI.js'
 import {IAR} from './icApp-render.js'
-import {XHR, Host, API, IC_DEV} from './common.js'
-import {getUser} from './user.js'
+import {XHR, Host, API, IC_DEV, pram} from './common.js'
+import {getUser, setUser} from './user.js'
+import {ShowErr} from './error.js'
+import './style.scss'
+import './Dialog.css'
+import './inputui.scss'
+import './loading-ani.css'
 
 ic.init = icApp => {
 var _root_ = new icApp.e('#root')
 _root_.chr()
 Theme.set('red')
-var idCounter = 0
-var id_col = []
+
+const defaultWait = 1200
+
 var icons = null
+
 class ICTech extends IAR {
 	constructor() {
 		super()
@@ -21,8 +27,17 @@ class ICTech extends IAR {
 			UI: 0,
 			icons: false,
 			user: null,
-			selfView: true
+			selfView: true,
+			st: 0,
+			newImg: null
 		}
+		this.user = null
+		this.image = null
+		this.submit = this.submit.bind(this)
+		this.loadImage = this.loadImage.bind(this)
+		this.cancelForm = this.cancelForm.bind(this)
+		this.deleteDialog = this.deleteDialog.bind(this)
+		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		if(IC_DEV) window.__IC_DEV__.ICTech = this
 	}
 	didMount() {
@@ -52,27 +67,79 @@ class ICTech extends IAR {
 				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / 13 * 100)}%.`
 			}
 			_a.txt = 'Connecting to the IC-Tech server.'
-			XHR(API + 'get?id=' + 1, user => {
+			XHR(API + 'get?id=' + ((d = pram('id')) ? d : 1), user => getUser({f: a => {
+				this.user = a
+				if(!user.success) ShowErr(0, user.error)
 				_a.txt = 'Building the Page.'
-				this.update({UI: 1, icons: 1, user: user.response})
-			})
-		}, 1200)
+				if(a) {
+					this.data.newImg = a.image
+					icApp.qs('form #name').value = a.name
+					icApp.qs('form #about').value = a.about
+				}
+				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
+			}}))
+		}, defaultWait)
 	}
 	didUpdate() {
+		inputUI.checkAll()
 		if(this.winsize) this.winsize()
+		new icApp.e('.inputui.img').cla('s1')
+	}
+	logout() {
+		setUser(null)
+		location.reload()
+	}
+	submit(e) {
+		e.preventDefault()
+		this.update({UI: 0})
+		setTimeout(a => XHR(API + (this.data.st == 1 ? 'set' : `delete?id=${this.user.id}&${this._a('password')}`), a=> {
+			if(!a.success) ShowErr(0, a.error)
+			else if(this.data.st == 0) this.logout()
+			else {
+				Object.assign(this.user, a.response)
+				setUser(this.user)
+				this.update({UI: 1, user: this.user})
+			}
+		}, undefined, this.data.st == 0 ? undefined : JSON.stringify({
+			id: this.user.id,
+			AToken: this.user.AToken,
+			name: icApp.qs('#name').value,
+			about: icApp.qs('#about').value,
+			image: this.image ? this.image : this.user.image
+		})), defaultWait)
+		return false
+	}
+	deleteDialog() {
+		dialogUI.create({name: 'Delete Account', msg: 'Deleting this account will remove all you data from IC-Tech Server. You will lost this Account and All the data forever. This Action Can not be undone.', but: ['DELETE', 'CANCEL'], f: a=> {
+			if(a.b == 0) this.update({UI: 2, st: 0})
+			dialogUI.remove(a.i)
+		}})
+	}
+	cancelForm(e) {
+		e.preventDefault()
+		this.update({UI: 1})
+		return false
+	}
+	loadImage(e) {
+		var t = e.target.files[0]
+		if(!FileReader) return
+		var f = new FileReader()
+		f.onload = e => this.update({newImg: URL.createObjectURL(this.image = new Blob([e.target.result], {type: t.type}))})
+		f.readAsArrayBuffer(t)
 	}
 	render() {
+		const _a = {display: this.data.selfView ? 'block' : 'none'}
 		return (
 			{ t: 'div', cl: 'ICApp', ch: [
 				{ t: 'div', cl: ['ICPage', 'Main', 'c1'], s: {display: this.data.UI == 1 ? 'flex' : 'none'}, ch: [
 					{ t: 'div', ch: [
-						{ t: 'div', cl: 'c1', s: {backgroundImage: `url(${this.data.user && this.data.user.image ? this.data.user.image : ''})`} },
+						{ t: 'div', cl: 'c1', s: {'background-image': `url(${this.data.user && this.data.user.image ? this.data.user.image : ''})`} },
 						{ t: 'div', cl: 'c2', ch: [
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
-							{ t: 'span', cl: 'c3', at: [['id', 'ic_i' + (id_col[0] = idCounter++)]], ch: this.data.user ? [{t: 'span', txt: this.data.user.about}, ...this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]}))] : undefined }
+							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) : [])] : undefined }
 						]},
-						!this.data.icons || !IC_DEV ? undefined : { t: 'label', at: [['for', 'ic_i'+(idCounter++)]], ch: [
-							{ t: 'input', at: [['type','checkbox'], ['id', 'ic_i' + --idCounter]]},
+						!this.data.icons || !IC_DEV ? undefined : { t: 'label', ch: [
+							{ t: 'input', at: [['type','checkbox']]},
 							{ t: 'div', cl: 'c1', ch: [
 								{ t: 'div' },
 								{ t: 'div' },
@@ -80,19 +147,39 @@ class ICTech extends IAR {
 							]},
 							{ t: 'div', cl: 'c2', ch: [
 								{ t: 'a', at: [['href', '/']], html: icons[0] },
-								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, e: [['onclick', a => this.update({UI: 1})]], html: icons[3] },
-								{ t: 'a', s: {display: this.data.selfView ? 'none' : 'block'}, at: [['href', '/']], html: icons[2] },
-								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[1] },
-								{ t: 'a', e: [['onclick', a => console.log(a)]], html: icons[4] }
+								{ t: 'a', s: _a, e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
+								{ t: 'a', s: {display: this.data.selfView ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/signin.html']], html: icons[2] },
+								{ t: 'a', s: _a, e: [['onclick', this.deleteDialog]], html: icons[1] },
+								{ t: 'a', s: _a, e: [['onclick', this.logout]], html: icons[4] }
 							]}
 						]},
 					]}
 				]},
 				{ t: 'div', cl: ['ICPage', 'load', 'c1'], s: {display: this.data.UI == 0 ? 'flex' : 'none'}, ch: [
 					{ t:'div', cl: 'loading-ani' },
-					{ t:'span', txt: '' }
+					{ t:'span', txt: ' ' }
 				]},
-				{ t: 'div', cl: ['ICPage', 'edit', 'c1'], s: {display: this.data.UI == 2 ? 'flex' : 'none'} }
+				{ t: 'div', cl: ['ICPage', 'edit', 'c1'], s: {display: this.data.UI == 2 ? 'flex' : 'none'}, ch: [
+					{t: 'div', ch: [
+						{ t: 'form', e: [['onsubmit', this.submit]], ch: [
+							{ t: 'span', cl: 'c1', txt: this.data.st == 0 ? 'Account Delete' : 'Change Information' },
+							inputUI({id: 'password', type: 'password', name: 'Password', s: {display: this.data.st == 0 ? 'block' : 'none'} }),
+							inputUI({id: 'name', type: 'text', name: 'Name', s: {display: this.data.st == 1 ? 'block' : 'none'}}),
+							inputUI({id: 'about', type: 'text', name: 'About', s: {display: this.data.st == 1 ? 'block' : 'none'}, multi: 1}),
+							{ t: 'div', cl: ['inputui', 's1', 'img'], s: {display: this.data.st == 1 ? 'block' : 'none'}, ch: [
+								{ t:'input', at: [['type', 'file'], ['id', 'image'], ['name', 'image']], s: {display: 'none'}, e: [['onchange', this.loadImage]]},
+								{ t:'label', at: [['for', 'image']], txt: 'Image' },
+								{ t: 'div', s: {'background-image': `url("${this.data.newImg}")` }},
+								{ t:'label', at: [['for', 'image']], txt: 'Browser', cl: ['ic-btn0', 'c1'] }
+							]},
+							{ t: 'span', cl: 'c2', txt: 'Please submit your new password for delete your account.', s: {display: this.data.st == 0 ? 'block' : 'none'} },
+							{ t: 'div', cl: 'c1', s: {paddingTop: '12px'}, ch: [
+								{ t: 'input', cl: 'ic-btn0', at: [['type', 'submit'], ['value', 'NEXT']]},
+								{ t: 'button', cl: ['ic-btn0', 's1'], txt: 'CANCEL', e: [['onclick', this.cancelForm]] }
+							]}
+						]}
+					]}
+				]}
 			]}
 		)
 	}
