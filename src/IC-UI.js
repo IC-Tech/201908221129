@@ -9,7 +9,13 @@ var inputUI = a => (
 		{t: a.multi ? 'textarea' : 'input', at: [['readonly', a.readonly], ['type', a.type], ['type', a.id], ['id', a.id]], e: [...[a.multi ? ['onkeyup', inputUI.resize ]: []], ['onfocus', inputUI.check], ['onblur', inputUI.check], ['onchange', inputUI.check], ['oninput', inputUI.check]]}
 ]})
 inputUI.check = a => new icApp.e(a = a.target).p[icApp.d.activeElement == a || a.value != '' ? 'cla' : 'clr']('s1')
-inputUI.checkAll = a => icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
+inputUI.checkAll = a => {
+	icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
+	icApp.qsa('.inputui textarea').forEach(a=> {
+		inputUI.check({target: a})
+		inputUI.resize({target: a})
+	})
+}
 inputUI.resize = e => {
   (e = e.target).style.height = '2px'
   e.style.height = 4 + e.scrollHeight + 'px'
