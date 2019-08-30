@@ -29,6 +29,10 @@ const XHR = (url, call, op, data) => {
   xhr.send(data)
 }
 const pram = (a, b) => {
+  if(!b) {
+    b = a
+    a = location.search
+  }
   var c = a.indexOf(b += '='),
   d = a.indexOf('&', c)
   c = c == -1 ? null : a.substring(c + b.length, d == -1 ? a.length : d)
