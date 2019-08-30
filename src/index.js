@@ -92,12 +92,13 @@ class ICTech extends IAR {
 	submit(e) {
 		e.preventDefault()
 		this.update({UI: 0})
-		setTimeout(a => XHR(API + (this.data.st == 1 ? 'set' : `delete?id=${this.user.id}&${this._a('password')}`), a=> {
+		var a = a => XHR(API + (this.data.st == 1 ? 'set' : `delete?id=${this.user.id}&${this._a('password')}`), a=> {
 			if(!a.success) ShowErr(0, a.error)
 			else if(this.data.st == 0) this.logout()
 			else {
 				Object.assign(this.user, a.response)
 				setUser(this.user)
+				this.user.image += '?_t=' + Date.now()
 				this.update({UI: 1, user: this.user})
 			}
 		}, undefined, this.data.st == 0 ? undefined : JSON.stringify({
@@ -105,8 +106,17 @@ class ICTech extends IAR {
 			AToken: this.user.AToken,
 			name: icApp.qs('#name').value,
 			about: icApp.qs('#about').value,
-			image: this.image ? this.image : this.user.image
-		})), defaultWait)
+			image: this.image ? a : this.user.image
+		}))
+		setTimeout(b => {
+			if(this.data.st == 0) a()
+			else {
+				if(!this.image) return a(this.user.image)
+				var f = new FileReader()
+				f.onload = e => a(e.target.result)
+				f.readAsDataURL(this.image)
+			}
+		}, defaultWait)
 		return false
 	}
 	deleteDialog() {
