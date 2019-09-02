@@ -177,7 +177,7 @@ class ICTech extends IAR {
 							inputUI({id: 'password', type: 'password', name: 'Password', s: {display: this.data.st == 0 ? 'block' : 'none'} }),
 							inputUI({id: 'name', type: 'text', name: 'Name', s: {display: this.data.st == 1 ? 'block' : 'none'}}),
 							inputUI({id: 'about', type: 'text', name: 'About', s: {display: this.data.st == 1 ? 'block' : 'none'}, multi: 1}),
-							{ t: 'div', cl: ['inputui', 's1', 'img'], s: {display: this.data.st == 1 ? 'block' : 'none'}, ch: [
+							{ t: 'div', cl: ['inputui', 's1', 'no', 'img'], s: {display: this.data.st == 1 ? 'block' : 'none'}, ch: [
 								{ t:'input', at: [['type', 'file'], ['id', 'image'], ['name', 'image']], s: {display: 'none'}, e: [['onchange', this.loadImage]]},
 								{ t:'label', at: [['for', 'image']], txt: 'Image' },
 								{ t: 'div', s: {'background-image': `url("${this.data.newImg}")` }},
