@@ -37,7 +37,6 @@ class SignIn extends IAR {
 		this.mail = this.mail.bind(this)
 		this.resign = this.resign.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
-		if(IC_DEV) window.__IC_DEV__.SignIn = this
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')

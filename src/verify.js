@@ -22,7 +22,6 @@ class Verify extends IAR {
 			UI: 0,
 			st: 0
 		}
-		if(IC_DEV) window.__IC_DEV__.Verify = this
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')

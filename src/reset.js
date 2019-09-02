@@ -26,7 +26,6 @@ class Reset extends IAR {
 		}
 		this.submit = this.submit.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
-		if(IC_DEV) window.__IC_DEV__.Reset = this
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')

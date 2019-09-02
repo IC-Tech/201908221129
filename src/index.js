@@ -38,7 +38,6 @@ class ICTech extends IAR {
 		this.cancelForm = this.cancelForm.bind(this)
 		this.deleteDialog = this.deleteDialog.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
-		if(IC_DEV) window.__IC_DEV__.ICTech = this
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
