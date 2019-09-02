@@ -92,6 +92,8 @@ class ICTech extends IAR {
 	}
 	submit(e) {
 		e.preventDefault()
+		var c = []
+		icApp.qsa('.edit .link > div:not(.c1)').forEach(a => (a = a.children[0].value) != "" && c.push(a))
 		this.update({UI: 0})
 		var a = a => XHR(API + (this.data.st == 1 ? 'set' : `delete?id=${this.user.id}&${this._a('password')}`), a=> {
 			if(!a.success) ShowErr(0, a.error)
@@ -107,7 +109,8 @@ class ICTech extends IAR {
 			AToken: this.user.AToken,
 			name: icApp.qs('#name').value,
 			about: icApp.qs('#about').value,
-			image: this.image ? a : this.user.image
+			image: this.image ? a : this.user.image,
+			links: c
 		}))
 		setTimeout(b => {
 			if(this.data.st == 0) a()
@@ -202,7 +205,7 @@ class ICTech extends IAR {
 								{ t: 'div', s: {'background-image': `url("${this.data.newImg}")` }},
 								{ t:'label', at: [['for', 'image']], txt: 'Browser', cl: ['ic-btn0', 'c1'] }
 							]},
-							!IC_DEV ? undefined : { t: 'div', cl: ['inputui', 's1', 'no', 'link'], s: {display: this.data.st == 1 ? 'flex' : 'none'}, ch: [
+							{ t: 'div', cl: ['inputui', 's1', 'no', 'link'], s: {display: this.data.st == 1 ? 'flex' : 'none'}, ch: [
 								{ t:'label', txt: 'Links' },
 								...(this.data.user && this.data.user.links ? this.data.user.links.map((a, b) => ({ t:'div', ch: [{ t: 'input', at:[['type','text'], ['value', a]]}, {t:'button', e: [['onclick', e=> e.preventDefault() != 1 && ((e = new icApp.e(e.target).p).tag == 'BUTTON' ? e.p : (e.tag == 'DIV' ? e : e.p.p)).cla('c1')]], html: icons ? icons[13] : null}]})) : []),
 								{ t: 'button', cl: 'ic-btn0', txt: 'New Link', e: [['onclick', a => a.preventDefault() != 1 && this.data.user.links.push('') != 0 && this.update()]] }
