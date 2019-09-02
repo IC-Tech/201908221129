@@ -57,7 +57,7 @@ class ICTech extends IAR {
 				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
 			}
 			var d = 0
-			const _icons = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16]
 			for(var a=0; a<_icons.length; a++) {
 				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
 					icons[a] = await b(_icons[a])
@@ -137,6 +137,25 @@ class ICTech extends IAR {
 		f.onload = e => this.update({newImg: URL.createObjectURL(this.image = new Blob([e.target.result], {type: t.type}))})
 		f.readAsArrayBuffer(t)
 	}
+	checkLink(a) {
+		if(a.startsWith('mailto:')) return 5
+		else if(a.startsWith('http://') || a.startsWith('https://'))
+			a = a.replace('https', 'http').replace('http://', '')
+		a = a.replace('www.', '')
+		var b = [
+			['twitter.', 6],
+			['github.', 7],
+			['youtube.', 9],
+			['youtu.be', 9],
+			['discord.', 10],
+			['plus.google.', 11],
+			['instagram.', 12],
+			['facebook.', 16]
+		]
+		for(var c=0; c<b.length; c++)
+			if(a.startsWith(b[c][0])) return b[c][1]
+		return 8
+	}
 	render() {
 		const _a = {display: this.data.selfView ? 'block' : 'none'}
 		return (
@@ -146,7 +165,7 @@ class ICTech extends IAR {
 						{ t: 'div', cl: 'c1', s: {'background-image': `url(${this.data.user && this.data.user.image ? this.data.user.image : ''})`} },
 						{ t: 'div', cl: 'c2', ch: [
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
-							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about + '\n'}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) : [])] : undefined }
+							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about + '\n'}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a]], html: icons[this.checkLink(a)]})) : [])] : undefined }
 						]},
 						!this.data.icons ? undefined : { t: 'label', ch: [
 							{ t: 'input', at: [['type','checkbox']]},
@@ -181,6 +200,11 @@ class ICTech extends IAR {
 								{ t:'label', at: [['for', 'image']], txt: 'Image' },
 								{ t: 'div', s: {'background-image': `url("${this.data.newImg}")` }},
 								{ t:'label', at: [['for', 'image']], txt: 'Browser', cl: ['ic-btn0', 'c1'] }
+							]},
+							!IC_DEV ? undefined : { t: 'div', cl: ['inputui', 's1', 'no', 'link'], s: {display: this.data.st == 1 ? 'flex' : 'none'}, ch: [
+								{ t:'label', txt: 'Links' },
+								...(this.data.user && this.data.user.links ? this.data.user.links.map((a, b) => ({ t:'div', ch: [{ t: 'input', at:[['type','text'], ['value', a]]}, {t:'button', e: [['onclick', e=> e.preventDefault() != 1 && ((e = new icApp.e(e.target).p).tag == 'BUTTON' ? e.p : (e.tag == 'DIV' ? e : e.p.p)).cla('c1')]], html: icons ? icons[13] : null}]})) : []),
+								{ t: 'button', cl: 'ic-btn0', txt: 'New Link', e: [['onclick', a => a.preventDefault() != 1 && this.data.user.links.push('') != 0 && this.update()]] }
 							]},
 							{ t: 'span', cl: 'c2', txt: 'Please submit your new password for delete your account.', s: {display: this.data.st == 0 ? 'block' : 'none'} },
 							{ t: 'div', cl: 'c1', s: {paddingTop: '12px'}, ch: [
