@@ -19,7 +19,7 @@ a.d.e ? a.d.e.forEach(b => a.e.v[b[0]] = b[1]) : 0,
 a.d.d ? _a([a.d.d, b => a.e.d[b] = a.d.d[b]]) : 0,
 a.d.html ? [a.e.html != a.d.html ? a.e.html = a.d.html : 0] : 0,
 a.d.txt ? [a.e.txt != a.d.txt ? a.e.txt = a.d.txt : 0] : 0,
-a.d.ch ? [a.d.ch.forEach((b,c) => b ? (a.e.ch[c] ? _elm({e: new icApp.e(a.e.ch[c]), d: b}) : a.e.ap(_ce(b)[_elm_pos].e.v)) : 0), a.e.ch.length > a.d.ch.length ? Loop(a.d.ch.length - a.e.ch.length, b => a.e.ch[a.d.ch.length + b].remove()) : 0] : 0,
+a.d.ch ? [a.d.ch.forEach((b,c) => b ? (a.e.ch[c] ? _elm({e: new icApp.e(a.e.ch[c]), d: b}) : a.e.ap(_ce(b)[_elm_pos].e.v)) : 0), a.e.ch.length > a.d.ch.length ? (b => { while(a.d.ch.length < a.e.ch.length) a.e.ch[a.e.ch.length - 1].remove() })() : 0] : 0,
 a
 ]
 class icAppRender {

@@ -151,7 +151,7 @@ class ICTech extends IAR {
 			['discord.', 10],
 			['plus.google.', 11],
 			['instagram.', 12],
-			['facebook.', 16]
+			['facebook.', 14]
 		]
 		for(var c=0; c<b.length; c++)
 			if(a.startsWith(b[c][0])) return b[c][1]
