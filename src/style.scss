@@ -206,6 +206,13 @@ $default-transition: .3s;
       font-size: 19px;
     }
   }
+  %minbtn {
+    display: block;
+    float: inherit;
+    width: 80%;
+    max-width: 260px;
+    margin: 10px auto;
+  }
   .inputui.img {
     div {
       width: 78vw;
@@ -218,11 +225,37 @@ $default-transition: .3s;
       background-size: cover;
     }
     .ic-btn0 {
-      display: block;
-      float: inherit;
-      width: 80%;
-      max-width: 260px;
-      margin: 10px auto;
+      @extend %minbtn;
+    }
+  }
+  .inputui.link {
+    flex-direction: column;
+    > div {
+      transition: max-height $default-transition;
+      display: flex;
+      flex-direction: row;
+      max-height: 600px;
+      overflow: hidden;
+      button {
+        padding: 2px;
+        width: 20px;
+        float: right;
+        border: 0;
+        background-color: #0000;
+        box-sizing: border-box;
+        color: col(i6);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      &.c1 {
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+      }
+    }
+    .ic-btn0 {
+      @extend %minbtn;
     }
   }
 }
