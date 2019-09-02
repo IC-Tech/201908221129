@@ -31,6 +31,7 @@ class ICTech extends IAR {
 			st: 0,
 			newImg: null
 		}
+		this.imgUpdate = '';
 		this.user = null
 		this.image = null
 		this.submit = this.submit.bind(this)
@@ -98,7 +99,7 @@ class ICTech extends IAR {
 			else {
 				Object.assign(this.user, a.response)
 				setUser(this.user)
-				this.user.image += '?_t=' + Date.now()
+				this.imgUpdate = '?_t=' + Date.now()
 				this.update({UI: 1, user: this.user})
 			}
 		}, undefined, this.data.st == 0 ? undefined : JSON.stringify({
@@ -162,7 +163,7 @@ class ICTech extends IAR {
 			{ t: 'div', cl: 'ICApp', ch: [
 				{ t: 'div', cl: ['ICPage', 'Main', 'c1'], s: {display: this.data.UI == 1 ? 'flex' : 'none'}, ch: [
 					{ t: 'div', ch: [
-						{ t: 'div', cl: 'c1', s: {'background-image': `url(${this.data.user && this.data.user.image ? this.data.user.image : ''})`} },
+						{ t: 'div', cl: 'c1', s: {'background-image': `url(${this.data.user && this.data.user.image ? this.data.user.image + this.imgUpdate : ''})`} },
 						{ t: 'div', cl: 'c2', ch: [
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
 							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about + '\n'}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a]], html: icons[this.checkLink(a)]})) : [])] : undefined }
