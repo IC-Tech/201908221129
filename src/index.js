@@ -146,7 +146,7 @@ class ICTech extends IAR {
 						{ t: 'div', cl: 'c1', s: {'background-image': `url(${this.data.user && this.data.user.image ? this.data.user.image : ''})`} },
 						{ t: 'div', cl: 'c2', ch: [
 							{ t: 'span', cl: 'c1', txt: this.data.user ? this.data.user.name : '' },
-							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) : [])] : undefined }
+							{ t: 'span', cl: 'c3', ch: this.data.user ? [{t: 'span', txt: this.data.user.about + '\n'}, ...(this.data.user.links ? this.data.user.links.map(a => ({ t:'a', at: [['target','_blank'],['rel','noopener noreferrer'],['href', a[0]]], html: icons[a[1]]})) : [])] : undefined }
 						]},
 						!this.data.icons ? undefined : { t: 'label', ch: [
 							{ t: 'input', at: [['type','checkbox']]},
