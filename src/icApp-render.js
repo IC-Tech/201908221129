@@ -10,7 +10,7 @@ const Loop = a => {
 }
 const _ce = a => _elm({e: new icApp.e(icApp.cE(a.t)), d: a})
 const _elm = a => [
-a.d.t ? [a.e.v.tagName != a.d.t.toUpperCase() ? (a.e = new icApp.e(([a.t = icApp.cE(a.d.t), a.e.v.parentElement ? a.e.v.parentElement.replaceChild(a.e.v, a.t) : 0, a.t])[2])) : 0] : 0,
+a.d.t ? [a.e.v.tagName != a.d.t.toUpperCase() ? (a.e = new icApp.e(([a.t = icApp.cE(a.d.t), a.e.v.parentElement ? a.e.v.parentElement.replaceChild(a.t, a.e.v) : 0, a.t])[2])) : 0] : 0,
 a.d.s ? [_a([a.e.st, b => [a.e.st[b = a.e.st[b]] = a.d.s[b] ? a.d.s[b] : null, a.d.s[b] ? delete a.d.s[b] : 0]]), _a([a.d.s, b => a.e.st[b] = a.d.s[b]])] : 0,
 a.d.cl ? [(a.d.cl = _b(a.d.cl)).forEach(b => a.e.clc(b) ? 0 : a.e.cla(b)), a.e.cl.forEach(b => a.d.cl.indexOf(b) >= 0 ? 0 : a.e.clr(b))] : 0,
 a.d.at ? a.d.at.forEach((b,c) => b[1] ? (a.e.v.getAttribute(b[0]) == b[1].toString() ? delete a.d.at[c] : a.e.v.setAttribute(b[0], b[1])) : a.e.v.removeAttribute(b[0])) : 0,
