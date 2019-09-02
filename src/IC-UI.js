@@ -10,8 +10,8 @@ var inputUI = a => (
 ]})
 inputUI.check = a => new icApp.e(a = a.target).p[icApp.d.activeElement == a || a.value != '' ? 'cla' : 'clr']('s1')
 inputUI.checkAll = a => {
-	icApp.qsa('.inputui input').forEach(a=> inputUI.check({target: a}))
-	icApp.qsa('.inputui textarea').forEach(a=> {
+	icApp.qsa('.inputui:not(.no) input').forEach(a=> inputUI.check({target: a}))
+	icApp.qsa('.inputui:not(.no) textarea').forEach(a=> {
 		inputUI.check({target: a})
 		inputUI.resize({target: a})
 	})
