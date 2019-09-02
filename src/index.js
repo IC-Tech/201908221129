@@ -58,13 +58,14 @@ class ICTech extends IAR {
 				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
 			}
 			var d = 0
-			for(var a=0; a<13; a++) {
-				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + a))) {
-					icons[a] = await b(a)
+			const _icons = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+			for(var a=0; a<_icons.length; a++) {
+				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
+					icons[a] = await b(_icons[a])
 					d += icons[a].length
-					localStorage.setItem('ic-tech:assets:v0:icon' + a, icons[a])
+					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
 				}
-				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / 13 * 100)}%.`
+				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
 			}
 			_a.txt = 'Connecting to the IC-Tech server.'
 			XHR(API + 'get?id=' + ((d = pram('id')) ? d : 1), user => getUser({f: a => {
