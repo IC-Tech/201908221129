@@ -39,6 +39,7 @@ class ICTech extends IAR {
 		this.cancelForm = this.cancelForm.bind(this)
 		this.deleteDialog = this.deleteDialog.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
+		this._b = []
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
@@ -77,6 +78,7 @@ class ICTech extends IAR {
 					icApp.qs('form #name').value = a.name
 					icApp.qs('form #about').value = a.about
 				}
+				this._b = a ? a.links : null
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
 			}}))
 		}, defaultWait)
@@ -102,6 +104,7 @@ class ICTech extends IAR {
 				Object.assign(this.user, a.response)
 				setUser(this.user)
 				this.imgUpdate = '?_t=' + Date.now()
+				this._b = this.user.links
 				this.update({UI: 1, user: this.user})
 			}
 		}, undefined, this.data.st == 0 ? undefined : JSON.stringify({
@@ -207,8 +210,8 @@ class ICTech extends IAR {
 							]},
 							{ t: 'div', cl: ['inputui', 's1', 'no', 'link'], s: {display: this.data.st == 1 ? 'flex' : 'none'}, ch: [
 								{ t:'label', txt: 'Links' },
-								...(this.data.user && this.data.user.links ? this.data.user.links.map((a, b) => ({ t:'div', ch: [{ t: 'input', at:[['type','text'], ['value', a]]}, {t:'button', e: [['onclick', e=> e.preventDefault() != 1 && ((e = new icApp.e(e.target).p).tag == 'BUTTON' ? e.p : (e.tag == 'DIV' ? e : e.p.p)).cla('c1')]], html: icons ? icons[13] : null}]})) : []),
-								{ t: 'button', cl: 'ic-btn0', txt: 'New Link', e: [['onclick', a => a.preventDefault() != 1 && this.data.user.links.push('') != 0 && this.update()]] }
+								...(this._b ? this._b.map((a, b) => ({ t:'div', ch: [{ t: 'input', at:[['type','text'], ['value', a]]}, {t:'button', e: [['onclick', e=> e.preventDefault() != 1 && ((e = new icApp.e(e.target).p).tag == 'BUTTON' ? e.p : (e.tag == 'DIV' ? e : e.p.p)).cla('c1')]], html: icons ? icons[13] : null}]})) : []),
+								{ t: 'button', cl: 'ic-btn0', txt: 'New Link', e: [['onclick', a => a.preventDefault() != 1 && (this._b ? this._b.push('') : this._b = ['']) != 'a' && this.update()]] }
 							]},
 							{ t: 'span', cl: 'c2', txt: 'Please submit your new password for delete your account.', s: {display: this.data.st == 0 ? 'block' : 'none'} },
 							{ t: 'div', cl: 'c1', s: {paddingTop: '12px'}, ch: [
