@@ -1,6 +1,7 @@
 /* Copyright © Imesh Chamara 2019 */
 'use strict';
 import './icApp.js'
+import {IC_DEV} from './common.js'
 const icApp = ic.icApp
 const _a = a => Object.keys(a[0]).forEach(b=>a[1](b))
 const _b = a => typeof a == 'object' ? a : [a]
@@ -26,6 +27,7 @@ class icAppRender {
 		this._elm = _elm.bind(this)
 		this._ce = _ce.bind(this)
 		this.e = null
+		if(IC_DEV) __IC_DEV__[this.constructor.name] = this
 	}
 	update(d) {
 		if(this.data) Object.assign(this.data, d)
