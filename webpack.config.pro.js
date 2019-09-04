@@ -27,7 +27,7 @@ module.exports = merge(common, {
               hmr: process.env.NODE_ENV === 'development',
             }
           },
-          'css-loader'
+          'css-loader', 'postcss-loader'
         ]
       },
       {
@@ -38,7 +38,7 @@ module.exports = merge(common, {
             options: {
               hmr: process.env.NODE_ENV === 'development',
             }
-          }, 'css-loader', 'sass-loader'],
+          }, 'css-loader', 'sass-loader', 'postcss-loader'],
       }
     ]
   },
