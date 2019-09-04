@@ -69,7 +69,12 @@ class ICTech extends IAR {
 				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
 			}
 			_a.txt = 'Connecting to the IC-Tech server.'
-			XHR(API + 'get?id=' + ((d = pram('id')) ? d : 1), user => getUser({f: a => {
+			if(d = location.pathname.match(/\/user\/([^\/]+)/)) d = d[1]
+			else {
+				d = pram('id')
+				if(d) history.pushState({IC_Nav: true}, document.title, '/user/' + d)
+			}
+			XHR(API + 'get?id=' + (d ? d : 1), user => getUser({f: a => {
 				this.user = a
 				if(!user.success) ShowErr(0, user.error)
 				_a.txt = 'Building the Page.'

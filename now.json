@@ -1,4 +1,7 @@
 {
   "name": "ic-tech",
-  "version": 2
+  "version": 2,
+  "routes": [
+    { "src": "\/user\/([^\/]+)", "dest": "/" }
+  ]
 }
