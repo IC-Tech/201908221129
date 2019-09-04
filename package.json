@@ -19,6 +19,7 @@
   "author": "Imesh Chamara <imesh1chamara@gmail.com> (http://ic-tech.dx.am/)",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^9.6.1",
     "bundlesize": "^0.18.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
@@ -29,6 +30,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.3.1",
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
