@@ -8,11 +8,11 @@ $default-transition: .3s;
   span {
     text-align: center;
     &.c1 {
-      color: col(i7);
+      color: row-col(light-7);
       font-size: 24px !important;
     }
     &.c2 {
-      color: col(i7);
+      color: row-col(light-7);
       font-size: 14px !important;
       padding: 10px 0;
     }
@@ -22,7 +22,7 @@ $default-transition: .3s;
   }
   &.load {
     span {
-      color: #000;
+      color: row-col(text-color);
     }
   }
   > div, &, div.c1 {
@@ -35,7 +35,7 @@ $default-transition: .3s;
       width: 80%;
       max-width: 400px;
       margin: 0 auto;
-      background-color: #fff;
+      background-color: row-col(dark-2);
       padding: 10px 20px;
       border-radius: 8px;
       box-shadow: 0 0 26px #0006;
@@ -54,7 +54,7 @@ $default-transition: .3s;
     max-width: 200px !important;
     margin: 0 auto;
     svg {
-      color: col(i5);
+      color: row-col(light-5);
     }
   }
   form div.c1 {
