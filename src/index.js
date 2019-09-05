@@ -42,6 +42,7 @@ class ICTech extends IAR {
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		this._b = []
 		this.darkTheme = true
+		new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', '/light.css').v)
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
@@ -89,7 +90,9 @@ class ICTech extends IAR {
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
 			}}))
 		}, defaultWait)
-		this.setTheme(JSON.parse(localStorage.getItem('ICTech.Theme')) == true, 1)
+		var a = JSON.parse(localStorage.getItem('ICTech.Theme'))
+		if(!a && a != false) a = window.matchMedia("(prefers-color-scheme: dark)").matches
+		this.setTheme(a, 1)
 	}
 	didUpdate() {
 		inputUI.checkAll()
@@ -176,6 +179,10 @@ class ICTech extends IAR {
 		new icApp.e('body')[a ? 'cla' : 'clr']('dark')
 		this.update()
 		if(!b) localStorage.setItem('ICTech.Theme', JSON.stringify(a))
+		var c = icApp.qs(`[href="${a ? '/light.css' : '/dark.css'}"`)
+		if(c) c.remove()
+		if(icApp.qs(`[href="${a ? '/dark.css' : '/light.css'}"`)) return
+		new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', a ? '/dark.css' : '/light.css').v)
 	}
 	render() {
 		const _a = {display: this.data.selfView ? 'block' : 'none'}
