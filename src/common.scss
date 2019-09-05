@@ -2,7 +2,7 @@
 $default-transition: .3s;
 
 @function row-col($v) {
-  @return unquote("var(--#{$v})");
+  @return unquote("rgb(var(--#{$v}))");
 }
 @function ic-col($v) {
   @return unquote("rgb(var(--ic-c-#{$v}))");
