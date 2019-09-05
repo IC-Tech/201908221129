@@ -64,11 +64,11 @@
   transition-duration: .4s;
 }
 .dialog button.c1 {
-  background-color: row-col(light-1);
-}
-.dialog button:hover {
   background-color: row-col(light-2);
 }
-.dialog button:active {
+.dialog button:hover {
   background-color: row-col(light-3);
+}
+.dialog button:active {
+  background-color: row-col(light-4);
 }
