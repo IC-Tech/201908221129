@@ -141,7 +141,7 @@
       box-shadow: 0 0 10px #0006;
       margin: 6px auto;
       transition-duration: $default-transition;
-      &:hover {
+      &:hover, &.s1 {
         color: #fff;
         background-color: row-col(light-5);
       }
@@ -187,11 +187,11 @@
   span {
     text-align: center;
     &.c1 {
-      color: ic-col(i7);
+      color: row-col(light-7);
       font-size: 24px !important;
     }
     &.c2 {
-      color: ic-col(i7);
+      color: row-col(light-7);
       font-size: 14px !important;
       padding: 10px 0;
     }
@@ -236,7 +236,7 @@
         border: 0;
         background-color: #fff0;
         box-sizing: border-box;
-        color: ic-col(i6);
+        color: row-col(light-6);
         display: flex;
         flex-direction: column;
         justify-content: center;
