@@ -176,13 +176,12 @@ class ICTech extends IAR {
 	}
 	setTheme(a, b) {
 		this.darkTheme = a
-		new icApp.e('body')[a ? 'cla' : 'clr']('dark')
-		this.update()
 		if(!b) localStorage.setItem('ICTech.Theme', JSON.stringify(a))
 		var c = icApp.qs(`[href="${a ? '/light.css' : '/dark.css'}"`)
 		if(c) c.remove()
 		if(icApp.qs(`[href="${a ? '/dark.css' : '/light.css'}"`)) return
 		new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', a ? '/dark.css' : '/light.css').v)
+		this.update()
 	}
 	render() {
 		const _a = {display: this.data.selfView ? 'block' : 'none'}
