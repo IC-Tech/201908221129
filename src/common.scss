@@ -1,0 +1,9 @@
+/* Copyright © Imesh Chamara 2019 */
+$default-transition: .3s;
+
+@function row-col($v) {
+  @return unquote("var(--#{$v})");
+}
+@function ic-col($v) {
+  @return unquote("rgb(var(--ic-c-#{$v}))");
+}

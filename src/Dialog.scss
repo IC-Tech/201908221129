@@ -1,5 +1,7 @@
 /* Copyright © Imesh Chamara 2019 */
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans|Roboto&display=swap');
+@import 'Theme';
+@import 'common';
 .dialog-container {
   display: block;
   position: absolute;
@@ -7,9 +9,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: -1;
-  -webkit-transition-duration: .6s;
-       -o-transition-duration: .6s;
-          transition-duration: .6s;
+  transition-duration: .6s;
   opacity: 0;
   left: 0px;
   top: 0px;
@@ -25,19 +25,13 @@
 }
 .dialog {
   width: 300px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin: 20vh auto;
   max-height: 200px;
-  background-color: #fff;
-  -webkit-box-shadow: 0 0 10px #0009;
-          box-shadow: 0 0 10px #0009;
+  background-color: row-col(dark-2);
+  box-shadow: 0 0 10px #0009;
   padding: 13px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   border-radius: 4px;
 }
 .dialog span {
@@ -62,22 +56,20 @@
   font-size: 13px;
   padding: 4px 8px;
   width: 80px;
-  background-color: #fff;
-  color: rgb(var(--ic-c-i8));
+  background-color: row-col(dark-2);
+  color: row-col(dialog-0);
   margin-left: 4px;
   margin-right: 4px;
   cursor: pointer;
   border-radius: 2px;
-  -webkit-transition-duration: .4s;
-       -o-transition-duration: .4s;
-          transition-duration: .4s;
+  transition-duration: .4s;
 }
 .dialog button.c1 {
-  background-color:rgb(var(--ic-c-i0));
+  background-color: row-col(light-1);
 }
 .dialog button:hover {
-  background-color:rgb(var(--ic-c-i1));
+  background-color: row-col(light-2);
 }
 .dialog button:active {
-  background-color:rgb(var(--ic-c-i2));
+  background-color: row-col(light-3);
 }

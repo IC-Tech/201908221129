@@ -9,6 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const merge = require('webpack-merge')
 const common = require('./webpack.config.common.js')
+const autoprefixer = require('autoprefixer')
 
 const outputDirectory = 'public';
 const PACKAGE = require('./package.json');
@@ -26,8 +27,13 @@ module.exports = merge(common, {
             options: {
               hmr: process.env.NODE_ENV === 'development',
             }
-          },
-          'css-loader', 'postcss-loader'
+          }, 'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          }
         ]
       },
       {
@@ -38,7 +44,13 @@ module.exports = merge(common, {
             options: {
               hmr: process.env.NODE_ENV === 'development',
             }
-          }, 'css-loader', 'sass-loader', 'postcss-loader'],
+          }, 'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          }, 'sass-loader'],
       }
     ]
   },

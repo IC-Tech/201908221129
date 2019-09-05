@@ -7,7 +7,7 @@ import {XHR, Host, API, IC_DEV, pram} from './common.js'
 import {getUser, setUser} from './user.js'
 import {ShowErr} from './error.js'
 import './style.scss'
-import './Dialog.css'
+import './Dialog.scss'
 import './inputui.scss'
 import './loading-ani.css'
 
@@ -87,6 +87,7 @@ class ICTech extends IAR {
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
 			}}))
 		}, defaultWait)
+		//new icApp.e('body').cla('dark');
 	}
 	didUpdate() {
 		inputUI.checkAll()

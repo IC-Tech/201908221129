@@ -2,7 +2,7 @@
 import './signin.scss'
 import './icApp.js'
 import './loading-ani.css'
-import './Dialog.css'
+import './Dialog.scss'
 import './inputui.scss'
 import {Theme} from './Theme.js'
 import {IAR} from './icApp-render.js'

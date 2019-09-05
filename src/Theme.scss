@@ -1,0 +1,66 @@
+/* Copyright © Imesh Chamara 2019 */
+body.dark {
+	$dark-1: #24252C;
+	$dark-2: #353642;
+	$dark-3: #3D3D4C;
+	$dark-4: #4B4C58;
+	$text-color: #eee;
+	$light-1: #5ccacf;
+	$light-2: #45c3c9;
+	$light-3: #2ebbc2;
+	$light-4: #17b4bb;
+	$light-5: #00adb5;
+	$light-6: #009ea5;
+	$light-7: #008e95;
+	$light-8: #007e84;
+	$light-9: #006f74;
+	--dark-1: #{$dark-1};
+	--dark-2: #{$dark-2};
+	--dark-3: #{$dark-3};
+	--dark-4: #{$dark-4};
+	--text-color: #{$text-color};
+	--light-1 : #{$light-1};
+	--light-2 : #{$light-2};
+	--light-3 : #{$light-3};
+	--light-4 : #{$light-4};
+	--light-5 : #{$light-5};
+	--light-6 : #{$light-6};
+	--light-7 : #{$light-7};
+	--light-8 : #{$light-8};
+	--light-9 : #{$light-9};
+	--dialog-0: #{$text-color};
+	--icons: #{$text-color};
+}
+body:not(.dark) {
+	$dark-1: #eee;
+	$dark-2: #fff;
+	$dark-3: #3D3D4C;
+	$dark-4: #4B4C58;
+	$text-color: #000;
+  $light-0: #ffebee;
+  $light-1: #ffcdd2;
+  $light-2: #ef9a9a;
+  $light-3: #e57373;
+  $light-4: #ef5350;
+  $light-5: #f44336;
+  $light-6: #e53935;
+  $light-7: #d32f2f;
+  $light-8: #c62828;
+  $light-9: #b71c1c;
+	--dark-1: #{$dark-1};
+	--dark-2: #{$dark-2};
+	--dark-3: #{$dark-3};
+	--dark-4: #{$dark-4};
+	--text-color: #{$text-color};
+	--light-1 : #{$light-1};
+	--light-2 : #{$light-2};
+	--light-3 : #{$light-3};
+	--light-4 : #{$light-4};
+	--light-5 : #{$light-5};
+	--light-6 : #{$light-6};
+	--light-7 : #{$light-7};
+	--light-8 : #{$light-8};
+	--light-9 : #{$light-9};
+	--dialog-0: #{$text-color};
+	--icons: #666;
+}

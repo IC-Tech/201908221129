@@ -1,6 +1,9 @@
 /* Copyright © Imesh Chamara 2019 */
+@import 'Theme';
+@import 'common';
 body, a, span, p, textarea {
   font-family: Roboto,Helvetica,'Segoe UI Emoji',-apple-system,BlinkMacSystemFont,Arial,'IC Noto Sans Sinhala','Segoe UI',Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue', sans-serif;
+  color: row-col(text-color);
 }
 body, html {
   margin: 0;
@@ -17,16 +20,12 @@ body, html {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   width: 100%;
   background-color: rgb(224, 224, 224);
   height: 100%;
   margin: 0 auto;
-  -webkit-box-shadow: 0 0 46px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 46px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 46px rgba(0, 0, 0, 0.5);
   position: relative;
 }
 .ICApp {
@@ -49,7 +48,7 @@ body, html {
 .ICPage {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: row-col(dark-1);
   overflow-y: auto;
   .loading-ani {
     margin: 0 auto;
@@ -60,27 +59,20 @@ body, html {
     margin: 4px;
     padding: 8px 16px;
     border-radius: 4px;
-    background-color: col(i3);
+    background-color: row-col(light-4);
     font-size: 14px;
     text-align: center;
-    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.46);
-            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.46);
-    color: rgb(255, 255, 255);
-    -webkit-transition-duration: .3s;
-         -o-transition-duration: .3s;
-            transition-duration: .3s;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.46);
+    color: #eee;
+    transition-duration: .3s;
     text-decoration: none;
   }
   .ic-btn0.s1 {
-    background-color: col(i5);
+    background-color: row-col(light-6);
   }
   .ic-btn0:not(.dis):active {
-    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.46);
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.46);
-    background-color: col(i4);
-  }
-  .ic-btn0:not(.dis):active {
-    background-color: col(i7);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.46);
+    background-color:  row-col(light-8);
   }
   .ic-btn0.dis {
     background-color: rgb(187, 187, 187);
