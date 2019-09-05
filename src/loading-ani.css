@@ -3,7 +3,7 @@
 	display: block;
 	width: 160px;
 	height: 160px;
-	border: 10px solid rgb(var(--ic-c-i5));
+	border: 10px solid rgb(var(--light-5));
 	border-radius: 50%;
 	border-left-color: rgba(255, 255, 255, 0);
 	border-right-color: rgba(255, 255, 255, 0);
