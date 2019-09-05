@@ -62,7 +62,7 @@ class ICTech extends IAR {
 				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
 			}
 			var d = 0
-			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16,18]
+			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16,18,19]
 			for(var a=0; a<_icons.length; a++) {
 				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
 					icons[a] = await b(_icons[a])
@@ -75,7 +75,7 @@ class ICTech extends IAR {
 			if(d = location.pathname.match(/\/user\/([^\/]+)/)) d = d[1]
 			else {
 				d = pram('id')
-				if(d) history.pushState({IC_Nav: true}, document.title, '/user/' + d)
+				if(d && !IC_DEV) history.pushState({IC_Nav: true}, document.title, '/user/' + d)
 			}
 			XHR(API + 'get?id=' + (d ? d : 1), user => getUser({f: a => {
 				this.user = a
@@ -205,10 +205,11 @@ class ICTech extends IAR {
 							{ t: 'div', cl: 'c2', ch: [
 								{ t: 'a', at: [['href', '/']], html: icons[0] },
 								{ t: 'a', s: _a, e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
-								{ t: 'a', s: {display: this.data.selfView ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/signin.html']], html: icons[2] },
+								{ t: 'a', s: {display: this.data.selfView || !this.user ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/']], html: icons[2] },
+								{ t: 'a', s: {display: this.user ? 'none' : 'block'}, at: [['href', '/signin.html']], html: icons[16] },
 								{ t: 'a', s: _a, e: [['onclick', this.deleteDialog]], html: icons[1] },
 								{ t: 'a', s: _a, e: [['onclick', this.logout]], html: icons[4] },
-								{ t: 'a', s: _a, cl: this.darkTheme ? 's1' : 's0', e: [['onclick', e => {this.setTheme(!this.darkTheme)}]], html: icons[15] }
+								{ t: 'a', cl: this.darkTheme ? 's1' : 's0', e: [['onclick', e => {this.setTheme(!this.darkTheme)}]], html: icons[15] }
 							]}
 						]},
 					]}
