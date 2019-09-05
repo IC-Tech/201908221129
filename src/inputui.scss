@@ -1,8 +1,5 @@
 /* Copyright © Imesh Chamara 2019 */
-$default-transition: .3s;
-@function col($v) {
-  @return unquote("rgb(var(--ic-c-#{$v}))");
-}
+@import 'common';
 .inputui {
 	display: block;
 	width: 100%;
@@ -13,7 +10,7 @@ $default-transition: .3s;
 .inputui label:not(.c1) {
 	display: block;
 	position: absolute;
-	color: col(i3);
+	color: row-col(light-3);
 	font-size: 16px;
 	margin: 8px 0 0 4px;
 	pointer-events: none;
@@ -37,9 +34,11 @@ $default-transition: .3s;
 	border-bottom-color: rgb(158, 158, 158);
 	font-size: 16px;
 	margin: 0;
+	color: row-col(text-color);
+	background-color: row-col(dark-2);
 }
 .inputui textarea:focus, .inputui input:focus {
-	border-bottom-color: col(i3);
+	border-bottom-color: row-col(light-3);
 }
 .inputui textarea {
 	resize: none;
