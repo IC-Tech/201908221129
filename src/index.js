@@ -35,11 +35,13 @@ class ICTech extends IAR {
 		this.user = null
 		this.image = null
 		this.submit = this.submit.bind(this)
+		this.setTheme = this.setTheme.bind(this)
 		this.loadImage = this.loadImage.bind(this)
 		this.cancelForm = this.cancelForm.bind(this)
 		this.deleteDialog = this.deleteDialog.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		this._b = []
+		this.darkTheme = true
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
@@ -59,7 +61,7 @@ class ICTech extends IAR {
 				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
 			}
 			var d = 0
-			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16]
+			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16,18]
 			for(var a=0; a<_icons.length; a++) {
 				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
 					icons[a] = await b(_icons[a])
@@ -87,7 +89,7 @@ class ICTech extends IAR {
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
 			}}))
 		}, defaultWait)
-		//new icApp.e('body').cla('dark');
+		this.setTheme(JSON.parse(localStorage.getItem('ICTech.Theme')) == true, 1)
 	}
 	didUpdate() {
 		inputUI.checkAll()
@@ -169,6 +171,12 @@ class ICTech extends IAR {
 			if(a.startsWith(b[c][0])) return b[c][1]
 		return 8
 	}
+	setTheme(a, b) {
+		this.darkTheme = a
+		new icApp.e('body')[a ? 'cla' : 'clr']('dark')
+		this.update()
+		if(!b) localStorage.setItem('ICTech.Theme', JSON.stringify(a))
+	}
 	render() {
 		const _a = {display: this.data.selfView ? 'block' : 'none'}
 		return (
@@ -192,7 +200,8 @@ class ICTech extends IAR {
 								{ t: 'a', s: _a, e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
 								{ t: 'a', s: {display: this.data.selfView ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/signin.html']], html: icons[2] },
 								{ t: 'a', s: _a, e: [['onclick', this.deleteDialog]], html: icons[1] },
-								{ t: 'a', s: _a, e: [['onclick', this.logout]], html: icons[4] }
+								{ t: 'a', s: _a, e: [['onclick', this.logout]], html: icons[4] },
+								{ t: 'a', s: _a, cl: this.darkTheme ? 's1' : 's0', e: [['onclick', e => {this.setTheme(!this.darkTheme)}]], html: icons[15] }
 							]}
 						]},
 					]}
