@@ -1,6 +1,6 @@
 /* Copyright © Imesh Chamara 2019 */
 import './icApp.js'
-import {Theme} from './Theme.js'
+import {Theme, initTheme} from './Theme.js'
 import {dialogUI, inputUI} from './IC-UI.js'
 import {IAR} from './icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
@@ -41,8 +41,7 @@ class ICTech extends IAR {
 		this.deleteDialog = this.deleteDialog.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		this._b = []
-		this.darkTheme = true
-		new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', '/light.css').v)
+		this.darkTheme = initTheme(icApp)
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]

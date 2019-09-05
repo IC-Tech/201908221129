@@ -2,7 +2,7 @@
 import './verify.scss'
 import './icApp.js'
 import './loading-ani.css'
-import {Theme} from './Theme.js'
+import {Theme, initTheme} from './Theme.js'
 import {IAR} from './icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
 import {ShowErr} from './error.js'
@@ -22,6 +22,7 @@ class Verify extends IAR {
 			UI: 0,
 			st: 0
 		}
+		initTheme(icApp)
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')

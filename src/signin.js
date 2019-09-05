@@ -4,7 +4,7 @@ import './icApp.js'
 import './loading-ani.css'
 import './Dialog.scss'
 import './inputui.scss'
-import {Theme} from './Theme.js'
+import {Theme, initTheme} from './Theme.js'
 import {IAR} from './icApp-render.js'
 import {inputUI, dialogUI} from './IC-UI.js'
 import {XHR, Host, API, IC_DEV} from './common.js'
@@ -37,6 +37,7 @@ class SignIn extends IAR {
 		this.mail = this.mail.bind(this)
 		this.resign = this.resign.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
+		initTheme(icApp)
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')
