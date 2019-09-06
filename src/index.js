@@ -1,6 +1,6 @@
 /* Copyright © Imesh Chamara 2019 */
 import './icApp.js'
-import {Theme, initTheme} from './Theme.js'
+import {Theme, initTheme, setTheme} from './Theme.js'
 import {dialogUI, inputUI} from './IC-UI.js'
 import {IAR} from './icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
@@ -89,9 +89,6 @@ class ICTech extends IAR {
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
 			}}))
 		}, defaultWait)
-		var a = JSON.parse(localStorage.getItem('ICTech.Theme'))
-		if(!a && a != false) a = window.matchMedia("(prefers-color-scheme: dark)").matches
-		this.setTheme(a, 1)
 	}
 	didUpdate() {
 		inputUI.checkAll()
@@ -175,11 +172,8 @@ class ICTech extends IAR {
 	}
 	setTheme(a, b) {
 		this.darkTheme = a
-		if(!b) localStorage.setItem('ICTech.Theme', JSON.stringify(a))
-		var c = icApp.qs(`[href="${a ? '/light.css' : '/dark.css'}"`)
-		if(c) c.remove()
-		if(icApp.qs(`[href="${a ? '/dark.css' : '/light.css'}"`)) return
-		new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', a ? '/dark.css' : '/light.css').v)
+		localStorage.setItem('ICTech.Theme', JSON.stringify(a))
+		setTheme(icApp, a)
 		this.update()
 	}
 	render() {
