@@ -234,7 +234,7 @@
         width: auto;
         float: right;
         border: 0;
-        background-color: #fff0;
+        background-color: rgba(#{var(--dark-2)}, 0);
         box-sizing: border-box;
         color: row-col(light-6);
         display: flex;
