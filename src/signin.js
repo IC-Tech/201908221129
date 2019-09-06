@@ -104,7 +104,7 @@ class SignIn extends IAR {
 						return 
 					}
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
-					location = Host
+					location = Host + '?id=' + a.response.id
 				})
 			else if(this.data.state == 2) {
 				_a.txt = 'Creating Account'
