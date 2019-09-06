@@ -8,8 +8,10 @@ const initTheme = a => {
 	const icApp = a
 	a = JSON.parse(localStorage.getItem('ICTech.Theme'))
 	if(!a && a != false) a = window.matchMedia("(prefers-color-scheme: dark)").matches
-	if(icApp.qs(`[href="${a ? '/dark.css' : '/light.css'}"`)) return
-	new icApp.e('head').cha(new icApp.e(icApp.cE('link')).sa('rel', 'stylesheet').sa('href', a ? '/dark.css' : '/light.css').v)
-	return a
+	return setTheme(icApp, a)
 }
-export {ColorThemes, Theme, initTheme}
+const setTheme = (a,b) => {
+	new a.e('#root')[b ? 'cla' : 'clr']('dark')
+	return b
+}
+export {ColorThemes, Theme, initTheme, setTheme}
