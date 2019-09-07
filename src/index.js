@@ -194,13 +194,13 @@ class ICTech extends IAR {
 								{ t: 'div' }
 							]},
 							{ t: 'div', cl: 'c2', ch: [
-								{ t: 'a', at: [['href', '/']], html: icons[0] },
-								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
-								{ t: 'a', s: {display: this.data.selfView || !this.user ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/']], html: icons[2] },
-								{ t: 'a', s: {display: this.user ? 'none' : 'block'}, at: [['href', '/signin.html']], html: icons[16] },
-								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, e: [['onclick', this.deleteDialog]], html: icons[1] },
-								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, e: [['onclick', this.logout]], html: icons[4] },
-								{ t: 'a', cl: this.darkTheme ? 's1' : 's0', e: [['onclick', e => {this.setTheme(!this.darkTheme)}]], html: icons[15] }
+								{ t: 'a', at: [['href', '/'], ['title', 'Homepage']], html: icons[0] },
+								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Profile Edit']], e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
+								{ t: 'a', s: {display: this.data.selfView || !this.user ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/'], ['title', 'Your Profile']], html: icons[2] },
+								{ t: 'a', s: {display: this.user ? 'none' : 'block'}, at: [['href', '/signin.html'], ['title', 'Signin']], html: icons[16] },
+								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Delete Account']], e: [['onclick', this.deleteDialog]], html: icons[1] },
+								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Logout']], e: [['onclick', this.logout]], html: icons[4] },
+								{ t: 'a', cl: this.darkTheme ? 's1' : 's0', at: [['title', 'Dark Theme']], e: [['onclick', e => {this.setTheme(!this.darkTheme)}]], html: icons[15] }
 							]}
 						]},
 					]}
