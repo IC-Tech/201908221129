@@ -5,7 +5,7 @@ import {IC_DEV} from './common.js'
 const icApp = ic.icApp
 const _a = a => Object.keys(a[0]).forEach(b=>a[1](b))
 const _b = a => typeof a == 'object' ? a : [a]
-const _elm_pos = 9
+const _elm_pos = 10
 const Loop = a => {
 	for(var i=0; i<a[0]; i++) a[1]([i, a])
 }
@@ -19,7 +19,8 @@ a.d.e ? a.d.e.forEach(b => a.e.v[b[0]] = b[1]) : 0,
 a.d.d ? _a([a.d.d, b => a.e.d[b] = a.d.d[b]]) : 0,
 a.d.html ? [a.e.html != a.d.html ? a.e.html = a.d.html : 0] : 0,
 a.d.txt ? [a.e.txt != a.d.txt ? a.e.txt = a.d.txt : 0] : 0,
-a.d.ch ? [a.d.ch.forEach((b,c) => b ? (a.e.ch[c] ? _elm({e: new icApp.e(a.e.ch[c]), d: b}) : a.e.ap(_ce(b)[_elm_pos].e.v)) : 0), a.e.ch.length > a.d.ch.length ? (b => { while(a.d.ch.length < a.e.ch.length) a.e.ch[a.e.ch.length - 1].remove() })() : 0] : 0,
+!a.d.noupdate && a.d.ch ? [a.d.ch.forEach((b,c) => b ? (a.e.ch[c] ? _elm({e: new icApp.e(a.e.ch[c]), d: b}) : a.e.ap(_ce(b)[_elm_pos].e.v)) : 0), a.e.ch.length > a.d.ch.length ? (b => { while(a.d.ch.length < a.e.ch.length) a.e.ch[a.e.ch.length - 1].remove() })() : 0] : 0,
+a.d.id ? a.e.v.id = a.d.id : 0,
 a
 ]
 class icAppRender {
@@ -27,13 +28,15 @@ class icAppRender {
 		this._elm = _elm.bind(this)
 		this._ce = _ce.bind(this)
 		this.e = null
+		this.a = false
 		if(IC_DEV) __IC_DEV__[this.constructor.name] = this
 	}
 	update(d) {
 		if(this.data) Object.assign(this.data, d)
 		if(this.render) {
 			this._elm({e: this.e, d: {ch: [this.render()]}})
-			if(this.didUpdate) this.didUpdate()
+			if(this.a && this.didUpdate) this.didUpdate()
+			if(!this.a) this.a = true
 		}
 	}
 	mount(e) {
