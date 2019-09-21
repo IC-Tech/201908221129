@@ -8,6 +8,7 @@ const outputDirectory = 'public';
 
 module.exports = {
   entry: {
+    babel: '@babel/polyfill',
     'ic-tech': './src/index.js',
     'signin': './src/signin.js',
     'verify': './src/verify.js',
@@ -24,6 +25,11 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'file-loader?name=assets/[name].[ext]&limit=100000'
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
   },
@@ -41,28 +47,28 @@ module.exports = {
       title: 'IC-Tech',
       template: './src/public/index.html',
       filename: 'index.html',
-      chunks: ['ic-tech', 'vendor'],
+      chunks: ['ic-tech', 'babel', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new HtmlWebpackPlugin({
       title: 'IC-Tech',
       template: './src/public/index.html',
       filename: 'signin.html',
-      chunks: ['signin', 'vendor'],
+      chunks: ['signin', 'babel', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new HtmlWebpackPlugin({
       title: 'IC-Tech',
       template: './src/public/index.html',
       filename: 'verify.html',
-      chunks: ['verify', 'vendor'],
+      chunks: ['verify', 'babel', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new HtmlWebpackPlugin({
       title: 'IC-Tech',
       template: './src/public/index.html',
       filename: 'reset.html',
-      chunks: ['reset', 'vendor'],
+      chunks: ['reset', 'babel', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
     new CopyPlugin([

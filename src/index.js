@@ -1,4 +1,5 @@
 /* Copyright © Imesh Chamara 2019 */
+"use strict";
 import './icApp.js'
 import {Theme, initTheme, setTheme} from './Theme.js'
 import {dialogUI, inputUI} from './IC-UI.js'

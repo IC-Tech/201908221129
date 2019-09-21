@@ -1,4 +1,5 @@
 /* Copyright © Imesh Chamara 2019 */
+"use strict";
 import './signin.scss'
 import './icApp.js'
 import './loading-ani.css'
