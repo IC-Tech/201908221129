@@ -10,6 +10,7 @@ const Loop = a => {
 	for(var i=0; i<a[0]; i++) a[1]([i, a])
 }
 const _ce = a => _elm({e: new icApp.e(icApp.cE(a.t)), d: a})
+const _re = (...a) => _elm({e: a[0], d: a[1]})
 const _elm = a => [
 a.d.t ? [a.e.v.tagName != a.d.t.toUpperCase() ? (a.e = new icApp.e(([a.t = icApp.cE(a.d.t), a.e.v.parentElement ? a.e.v.parentElement.replaceChild(a.t, a.e.v) : 0, a.t])[2])) : 0] : 0,
 a.d.s ? [_a([a.e.st, b => [a.e.st[b = a.e.st[b]] = a.d.s[b] ? a.d.s[b] : null, a.d.s[b] ? delete a.d.s[b] : 0]]), _a([a.d.s, b => a.e.st[b] = a.d.s[b]])] : 0,
@@ -34,7 +35,8 @@ class icAppRender {
 	update(d) {
 		if(this.data) Object.assign(this.data, d)
 		if(this.render) {
-			this._elm({e: this.e, d: {ch: [this.render()]}})
+			var b = this.render()
+			this._elm({e: this.e, d: {ch: typeof b.length == 'undefined' ? [b] : b}})
 			if(this.a && this.didUpdate) this.didUpdate()
 			if(!this.a) this.a = true
 		}
@@ -45,4 +47,4 @@ class icAppRender {
 		if(this.didMount) this.didMount()
 	}
 }
-export {icAppRender as IAR, _ce as IAR_CE, _elm_pos as IAR_EP}
+export {icAppRender as IAR, _ce as IAR_CE, _elm_pos as IAR_EP, _re as IAR_RE}

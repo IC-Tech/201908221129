@@ -18,6 +18,7 @@ const icApp = {
 		constructor(v){ this.v = typeof v == 'string' ? icApp.qs(v) : v; return v == null || v == undefined ? v : this }
 		get cl() { return this.v.classList }
 		get ch() { return this.v.children }
+		get chn() { return this.v.childNodes }
 		cha(v) { this.v.appendChild(v); return this }
 		ap(v) { this.v.appendChild(v); return this }
 		// eslint-disable-next-line no-unused-vars
@@ -37,6 +38,8 @@ const icApp = {
 		ae(n,f) { this.v.addEventListener(n,f); return this }
 		get p() {return new icApp.e(this.v.parentElement) }
 		get tag() {return this.v.tagName }
+		get val() { return this.v.value }
+		set val(v) { this.v.value = v }
 		rem() { this.v.remove(); return this }
 	},
 	ds: a => new icApp.e(Object.keys((a = {a,b: ''}).a).forEach(b=> a.b+=`[data-${b}="${a.a[b]}"]`) == 'a' ? 0 : a.b)
