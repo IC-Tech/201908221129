@@ -12,6 +12,8 @@ import {XHR, Host, API, IC_DEV} from './common.js'
 import {getUser, setUser} from './user.js'
 import {ShowErr} from './error.js'
 
+window.ic = window.ic || []
+window.ic.pageLoad = Date.now()
 ic.init = icApp => {
 var _root_ = new icApp.e('#root')
 _root_.chr()
@@ -39,45 +41,45 @@ class SignIn extends IAR {
 		this.resign = this.resign.bind(this)
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		initTheme(icApp)
+		gtag('event', 'screen_view', { 'screen_name': 'Signin'})
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')
 		_a.txt = 'Reduce the loading impact.'
 		setTimeout(async a=> {
-			icons = []
-			_a.txt = 'Downloading the page.'
-			var b = a=> new Promise(r => XHR(Host + `assets/${a}.svg`, a => r(a), {raw:1}))
-			var c = a=> {
-				a = [a, 0]
-				while(a[0] >= 1024) {
-					a[1]++;
-					a[0] = a[0] / 1024
-				}
-				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
-			}
-			var d = 0
-			const _icons = [13, 14]
-			for(var a=0; a<_icons.length; a++) {
-				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
-					icons[a] = await b(_icons[a])
-					d += icons[a].length
-					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
-				}
-				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
-			}
+			_a.txt = 'Receiving the page.'
+			var b = JSON.parse(localStorage.getItem('ic-tech:assets:v1:signin'))
+			icons = !b || b == 'null' ? (await new Promise(r => XHR(Host + `assets/signin.json`, a => r(a))))['IC-Tech.Assets'] : b
+			if(!b || b == 'null') localStorage.setItem('ic-tech:assets:v1:signin', JSON.stringify(icons))
 			_a.txt = 'Building the Page'
 			getUser({f: a => this.update({UI: a ? 5: 1})})
+			;(['page_mount_end', 'Signin Page Load']).forEach(a => gtag('event', a, {
+  				'name': 'pageMount',
+  				'value': Date.now() - window.ic.pageLoad,
+  				'event_category': 'timing',
+  				'event_label': 'IC App'
+				}))
 		}, defaultWait)
 	}
 	didUpdate() {
 		inputUI.checkAll()
 	}
 	mail(t) {
+		gtag('event', `${t == 1 ? 'verify' : 'reset'} Email send`, {
+			event_category: 'Account',
+			event_label: 'Email Send'
+		})
 		this.update({UI: 0, mail: t})
 		setTimeout(a => XHR(API + encodeURI(`send/${t == 1 ? 'verify' : 'reset'}?${this._a('email')}`), a=> {
 			if(!a.success) {
 				if(a.error.indexOf('Email already verified') >= 0) this.update({UI:1, state: 1})
-				else ShowErr(0, a.error)
+				else {
+					ShowErr(0, a.error)
+					gtag('event', 'exception', {
+						'description': 'Email Error => ' + a.error,
+						'fatal': true
+					})
+				}
 				return
 			}
 			this.update({UI: 4})
@@ -88,11 +90,21 @@ class SignIn extends IAR {
 		this.update({UI: 0})
 		var _a = new icApp.e('.load span')
 		setTimeout(a => {
+			gtag('event', (['Check Email', 'Signin', 'Signup'])[this.data.state], {
+				event_category: 'Account',
+				event_label: 'Signin Form submit'
+			})
 			if(this.data.state == 0)
 				XHR(API + encodeURI('exists?' + this._a('email')), a=> {
 					if(!a.success) {
 						if(a.error.indexOf('Email not verified') >= 0) this.mail(1)
-						else ShowErr(0, a.error)
+						else {
+							ShowErr(0, a.error)
+							gtag('event', 'exception', {
+								'description': 'API Error => ' + a.error,
+								'fatal': true
+							})
+						}
 						return
 					}
 					this.update({state: 1, UI: a.response ? 1 : 2})
@@ -101,7 +113,13 @@ class SignIn extends IAR {
 				XHR(API + encodeURI('signin?' + this._a('email') + '&' + this._a('password')), a=> {
 					if(!a.success) {
 						if(a.error.indexOf('wrong password') >= 0) this.update({UI: 3})
-						else ShowErr(0, a.error)
+						else {
+							ShowErr(0, a.error)
+							gtag('event', 'exception', {
+								'description': 'API Error => ' + a.error,
+								'fatal': true
+							})
+						}
 						return 
 					}
 					localStorage.setItem('IC-Tech.User', JSON.stringify(a.response))
@@ -121,10 +139,18 @@ class SignIn extends IAR {
 	cancel(e) {
 		e.preventDefault()
 		this.update({UI: 0})
+		gtag('event', 'Cancel ' + (['Unknown', 'Signin', 'Signup'])[this.data.state], {
+			event_category: 'Signin',
+			event_label: 'Signin'
+		})
 		setTimeout(a => this.update({state: 0, UI: 1}), defaultWait)
 		return false
 	}
 	resign() {
+		gtag('event', 'Resign', {
+			event_category: 'Account',
+			event_label: 'Resign'
+		})
 		setUser(null)
 		location.reload()
 	}
