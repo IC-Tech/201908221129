@@ -18,6 +18,8 @@ _root_.chr()
 Theme.set('red')
 
 const defaultWait = 1200
+window.ic = window.ic || []
+window.ic.pageLoad = Date.now()
 
 var icons = null
 
@@ -43,6 +45,7 @@ class ICTech extends IAR {
 		this._a = (a => a + '=' + icApp.qs('#' + a).value).bind(this)
 		this._b = []
 		this.darkTheme = initTheme(icApp)
+		gtag('event', 'screen_view', { 'screen_name': 'Home'})
 	}
 	didMount() {
 		this.winsize = a => [a = [matchMedia('(orientation:portrait),(min-height:480px)and(max-width:680px)').matches, new icApp.e('.Main>div>div.c1')], a[0] && a[1].v.offsetWidth != a[1].v.offsetHeight ? a[1].st.height = a[1].v.offsetWidth + 'px' : (!a[0] && a[1].st.height != '' ? a[1].st.height = null : 0)]
@@ -50,34 +53,17 @@ class ICTech extends IAR {
 		var _a = new icApp.e('.load span')
 		_a.txt = 'Reduce the loading impact.'
 		setTimeout(async a=> {
-			icons = []
-			_a.txt = 'Downloading the page.'
-			var b = a=> new Promise(r => XHR(Host + `assets/${a}.svg`, a => r(a), {raw:1}))
-			var c = a=> {
-				a = [a, 0]
-				while(a[0] >= 1024) {
-					a[1]++;
-					a[0] = a[0] / 1024
-				}
-				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
-			}
-			var d = 0
-			const _icons = [0,1,2,3,4,5,6,7,17,9,10,11,12,13,16,18,19]
-			for(var a=0; a<_icons.length; a++) {
-				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
-					icons[a] = await b(_icons[a])
-					d += icons[a].length
-					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
-				}
-				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
-			}
+			_a.txt = 'Receiving the page.'
+			var b = JSON.parse(localStorage.getItem('ic-tech:assets:v1:index'))
+			icons = !b || b == 'null' ? (await new Promise(r => XHR(Host + `assets/index.json`, a => r(a))))['IC-Tech.Assets'] : b
+			if(!b || b == 'null') localStorage.setItem('ic-tech:assets:v1:index', JSON.stringify(icons))
 			_a.txt = 'Connecting to the IC-Tech server.'
-			if(d = location.pathname.match(/\/user\/([^\/]+)/)) d = d[1]
+			if(b = location.pathname.match(/\/user\/([^\/]+)/)) b = b[1]
 			else {
-				d = pram('id')
-				if(d && !IC_DEV) history.pushState({IC_Nav: true}, document.title, '/user/' + d)
+				b = pram('id')
+				if(b && !IC_DEV) history.pushState({IC_Nav: true}, document.title, '/user/' + b)
 			}
-			XHR(API + 'get?id=' + (d ? d : 1), user => getUser({f: a => {
+			XHR(API + 'get?id=' + (b ? b : 1), user => getUser({f: a => {
 				this.user = a
 				if(!user.success) ShowErr(0, user.error)
 				_a.txt = 'Building the Page.'
@@ -88,6 +74,12 @@ class ICTech extends IAR {
 				}
 				this._b = a ? a.links : null
 				this.update({UI: 1, icons: 1, user: (user = user.response), selfView: a && a.id == user.id })
+				;(['page_mount_end', 'Home Page Load']).forEach(a => gtag('event', a, {
+  				'name': 'pageMount',
+  				'value': Date.now() - window.ic.pageLoad,
+  				'event_category': 'timing',
+  				'event_label': 'IC App'
+				}))
 			}}))
 		}, defaultWait)
 	}
@@ -97,11 +89,19 @@ class ICTech extends IAR {
 		new icApp.e('.inputui.img').cla('s1')
 	}
 	logout() {
+		gtag('event', 'Logout', {
+			event_category: 'Account',
+			event_label: 'Profile'
+		})
 		setUser(null)
 		location.reload()
 	}
 	submit(e) {
 		e.preventDefault()
+		gtag('event', `Profile ${this.data.st == 1 ? 'Change' : 'delete'}`, {
+			event_category: 'Account',
+			event_label: 'Profile'
+		})
 		var c = []
 		icApp.qsa('.edit .link > div:not(.c1)').forEach(a => (a = a.children[0].value) != "" && c.push(a))
 		this.update({UI: 0})
@@ -135,6 +135,10 @@ class ICTech extends IAR {
 		return false
 	}
 	deleteDialog() {
+		gtag('event', 'Try Delete', {
+			event_category: 'Account',
+			event_label: 'Profile'
+		})
 		dialogUI.create({name: 'Delete Account', msg: 'Deleting this account will remove all you data from IC-Tech Server. You will lost this Account and All the data forever. This Action Can not be undone.', but: ['DELETE', 'CANCEL'], f: a=> {
 			if(a.b == 0) this.update({UI: 2, st: 0})
 			dialogUI.remove(a.i)
@@ -142,6 +146,10 @@ class ICTech extends IAR {
 	}
 	cancelForm(e) {
 		e.preventDefault()
+		gtag('event', 'Cancel Edit', {
+			event_category: 'Account',
+			event_label: 'Profile Edit'
+		})
 		this.update({UI: 1})
 		return false
 	}
@@ -172,6 +180,10 @@ class ICTech extends IAR {
 		return 8
 	}
 	setTheme(a, b) {
+		gtag('event', `Set ${!this.darkTheme ? 'Dark' : 'Light'} Theme`, {
+			event_category: 'UI',
+			event_label: 'Change Theme'
+		})
 		this.darkTheme = a
 		localStorage.setItem('ICTech.Theme', JSON.stringify(a))
 		setTheme(icApp, a)
@@ -196,7 +208,10 @@ class ICTech extends IAR {
 							]},
 							{ t: 'div', cl: 'c2', ch: [
 								{ t: 'a', at: [['href', '/'], ['title', 'Homepage']], html: icons[0] },
-								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Profile Edit']], e: [['onclick', a => this.update({UI: 2, st: 1})]], html: icons[3] },
+								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Profile Edit']], e: [['onclick', a => {
+									this.update({UI: 2, st: 1})
+									gtag('event', 'screen_view', { 'screen_name': 'Edit'})
+								}]], html: icons[3] },
 								{ t: 'a', s: {display: this.data.selfView || !this.user ? 'none' : 'block'}, at: [['href', this.user ? '/?id='+this.user.id : '/'], ['title', 'Your Profile']], html: icons[2] },
 								{ t: 'a', s: {display: this.user ? 'none' : 'block'}, at: [['href', '/signin.html'], ['title', 'Signin']], html: icons[16] },
 								{ t: 'a', s: {display: this.data.selfView ? 'block' : 'none'}, at: [['title', 'Delete Account']], e: [['onclick', this.deleteDialog]], html: icons[1] },
