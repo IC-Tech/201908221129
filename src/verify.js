@@ -8,6 +8,8 @@ import {IAR} from './icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
 import {ShowErr} from './error.js'
 
+window.ic = window.ic || []
+window.ic.pageLoad = Date.now()
 ic.init = icApp => {
 var _root_ = new icApp.e('#root')
 _root_.chr()
@@ -24,36 +26,33 @@ class Verify extends IAR {
 			st: 0
 		}
 		initTheme(icApp)
+		gtag('event', 'screen_view', { 'screen_name': 'Verify Account'})
 	}
 	didMount() {
 		var _a = new icApp.e('.load span')
 		_a.txt = 'Reduce the loading impact.'
 		setTimeout(async a=> {
 			icons = []
-			_a.txt = 'Downloading the page.'
-			var b = a=> new Promise(r => XHR(Host + `assets/${a}.svg`, a => r(a), {raw:1}))
-			var c = a=> {
-				a = [a, 0]
-				while(a[0] >= 1024) {
-					a[1]++;
-					a[0] = a[0] / 1024
-				}
-				return parseInt(a[0]) + ([' bytes', 'KB', 'MB', 'GB'])[a[1]]
-			}
-			var d = 0
-			const _icons = [15, 13]
-			for(var a=0; a<_icons.length; a++) {
-				if(!(icons[a] = localStorage.getItem('ic-tech:assets:v0:icon' + _icons[a]))) {
-					icons[a] = await b(_icons[a])
-					d += icons[a].length
-					localStorage.setItem('ic-tech:assets:v0:icon' + _icons[a], icons[a])
-				}
-				_a.txt = `Downloading the page (${c(d)}) ${parseInt(a / _icons.length * 100)}%.`
-			}
+			_a.txt = 'Receiving the page.'
+			var b = JSON.parse(localStorage.getItem('ic-tech:assets:v1:verify'))
+			icons = !b || b == 'null' ? (await new Promise(r => XHR(Host + `assets/verify.json`, a => r(a))))['IC-Tech.Assets'] : b
+			if(!b || b == 'null') localStorage.setItem('ic-tech:assets:v1:verify', JSON.stringify(icons))
 			_a.txt = 'Connecting to the IC-Tech server.'
-			d = pram(location.search, 'eid')
-			if(!d) location = Host
-			XHR(API + 'verify?eid=' + d, a => this.update({UI: 1, st: a.success && a.response ? 0 : 1}))
+			b = pram(location.search, 'eid')
+			if(!b) location = Host
+			XHR(API + 'verify?eid=' + b, a => {
+				this.update({UI: 1, st: (a = a.success && a.response) ? 0 : 1})
+				gtag('event', a ? 'Done Verify' : 'unable to verify with eid', {
+					event_category: 'Account',
+					event_label: 'Account verify'
+				})
+			})
+			;(['page_mount_end', 'Verify Page Load']).forEach(a => gtag('event', a, {
+  				'name': 'pageMount',
+  				'value': Date.now() - window.ic.pageLoad,
+  				'event_category': 'timing',
+  				'event_label': 'IC App'
+				}))
 		}, defaultWait)
 	}
 	render() {
