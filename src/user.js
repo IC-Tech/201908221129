@@ -26,7 +26,7 @@ const getUser = _a => {
 		if(a.response != user.update) {
 			XHR(API + `get/update?${b({a:user, b:'id'})}&${b({a:user, b:'AToken'})}`, a => {
 				if(c(a)) return
-				if((a = a.response).action == 'resign') return ShowErr(1)
+				if((a = a.response).action == 'resign') return ShowErr(2)
 				else Object.assign(user, a.data)
 				_a.f(user)
 			})
