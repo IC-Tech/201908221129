@@ -14,6 +14,10 @@ const icApp = {
 	_n: {
 		a: (v, f) =>{var a=true,b=0;for(;b<v.length&&(a=f(v[b],b,v));b++);return a;}
 	},
+	ls: {
+		g: a => localStorage.getItem(a),
+		s: (a,b) => localStorage.setItem(a,b)
+	},
 	e: class e {
 		constructor(v){ this.v = typeof v == 'string' ? icApp.qs(v) : v; return v == null || v == undefined ? v : this }
 		get cl() { return this.v.classList }
