@@ -6,7 +6,7 @@ const Theme = {
 }
 const initTheme = a => {
 	const icApp = a
-	a = JSON.parse(localStorage.getItem('ICTech.Theme'))
+	a = JSON.parse(localStorage.getItem('ICTech.Theme') || 'true')
 	if(!a && a != false) a = window.matchMedia("(prefers-color-scheme: dark)").matches
 	return setTheme(icApp, a)
 }
