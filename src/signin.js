@@ -1,12 +1,12 @@
 /* Copyright © Imesh Chamara 2019 */
 "use strict";
 import './signin.scss'
-import './icApp.js'
+import '../icApp/icApp.js'
 import './loading-ani.css'
 import './Dialog.scss'
 import './inputui.scss'
 import {Theme, initTheme} from './Theme.js'
-import {IAR} from './icApp-render.js'
+import {IAR} from '../icApp/icApp-render.js'
 import {inputUI, dialogUI} from './IC-UI.js'
 import {XHR, Host, API, IC_DEV} from './common.js'
 import {getUser, setUser} from './user.js'

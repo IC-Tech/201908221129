@@ -1,9 +1,9 @@
 /* Copyright © Imesh Chamara 2019 */
 "use strict";
-import './icApp.js'
+import '../icApp/icApp.js'
 import {Theme, initTheme, setTheme} from './Theme.js'
 import {dialogUI, inputUI} from './IC-UI.js'
-import {IAR} from './icApp-render.js'
+import {IAR} from '../icApp/icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
 import {getUser, setUser} from './user.js'
 import {ShowErr} from './error.js'

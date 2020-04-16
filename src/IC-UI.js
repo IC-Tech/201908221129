@@ -1,7 +1,7 @@
 /* Copyright © Imesh Chamara 2019 */
 'use strict';
-import './icApp.js'
-import {IAR_CE, IAR_EP} from './icApp-render.js'
+import '../icApp/icApp.js'
+import {IAR_CE, IAR_EP} from '../icApp/icApp-render.js'
 const icApp = ic.icApp
 var inputUI = a => (
 	{t: 'div', cl: 'inputui', s: a.s, ch: [

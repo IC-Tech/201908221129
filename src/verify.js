@@ -1,10 +1,10 @@
 /* Copyright © Imesh Chamara 2019 */
 "use strict";
 import './verify.scss'
-import './icApp.js'
+import '../icApp/icApp.js'
 import './loading-ani.css'
 import {Theme, initTheme} from './Theme.js'
-import {IAR} from './icApp-render.js'
+import {IAR} from '../icApp/icApp-render.js'
 import {XHR, Host, API, IC_DEV, pram} from './common.js'
 import {ShowErr} from './error.js'
 
