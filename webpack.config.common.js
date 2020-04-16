@@ -12,7 +12,8 @@ module.exports = {
     'ic-tech': './src/index.js',
     'signin': './src/signin.js',
     'verify': './src/verify.js',
-    'reset': './src/reset.js'
+    'reset': './src/reset.js',
+    'p202002171833': './src/projects/202002171833.js',
   },
   output: {
     path: path.join(__dirname, outputDirectory),
@@ -71,6 +72,13 @@ module.exports = {
       chunks: ['reset', 'babel', 'vendor'],
       favicon: './src/public/favicon.ico'
     }),
+    new HtmlWebpackPlugin({
+      title: 'IC-Tech',
+      template: './src/public/index.html',
+      filename: 'p/202002171833.html',
+      chunks: ['p202002171833', 'babel', 'vendor'],
+      favicon: './src/public/favicon.ico'
+    }),
     new CopyPlugin([
       {
         from: 'src/public',
@@ -81,5 +89,15 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.__IC_DEV__': process.env.WEBPACK_DEV_SERVER == 'true' ? 'true' : 'false'
     })
+  ],
+  externals: [
+    {
+      'gl-matrix': {
+        root: 'window',
+        commonjs: 'gl-matrix',
+        commonjs2: 'gl-matrix',
+        amd: 'gl-matrix'
+      }
+    }
   ]
 };
