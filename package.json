@@ -48,8 +48,12 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@types/gl-matrix": "^2.4.5",
     "express": "^4.17.1",
-    "serve": "^11.1.0"
+    "gl-mat4": "^1.2.0",
+    "phaser": "^3.22.0",
+    "serve": "^11.1.0",
+    "three": "^0.113.2"
   },
   "browserslist": "> 0.25%, not dead",
   "repository": {
