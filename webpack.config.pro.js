@@ -13,7 +13,7 @@ const autoprefixer = require('autoprefixer')
 
 const outputDirectory = 'public';
 const PACKAGE = require('./package.json');
-const banner = PACKAGE.name + ' v' + PACKAGE.version + '\nCopyright © Imesh Chamara 2019\n@license ' + PACKAGE.license + '\nhttp://ic-tech.dx.am';
+const banner = `${PACKAGE.name} v${PACKAGE.version}\nCopyright © 2019-${(new Date(process.env.SOURCE_DATE_EPOCH ? (process.env.SOURCE_DATE_EPOCH * 1000) : new Date().getTime())).getFullYear()}, Imesh Chamara. All rights reserved.\n@license ${PACKAGE.license}\nhttp://ic-tech.now.sh`;
 
 
 module.exports = merge(common, {

@@ -1,0 +1,181 @@
+$col1: #1d2228;
+$col2: #31363e;
+$col3: #2e86de;
+$col4: #eeeeee;
+$col5: #cccccc;
+$col6: #ff203f;
+$default-transition: .3s;
+@mixin button() {
+	background-color: $col3;
+	color: $col4;
+	font-size: 16px;
+	border: 0;
+	border-radius: 6px;
+	padding: 6px 12px 8px;
+	@include fonts;
+	cursor: pointer;
+}
+@mixin fonts() {
+	font-family: 'Noto Sans JP',Roboto,Helvetica,'Segoe UI Emoji',-apple-system,BlinkMacSystemFont,Arial,'IC Noto Sans Sinhala','Segoe UI',Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+
+body, a, span, p, textarea {
+	@include fonts;
+	font-size: 16px;
+}
+* {
+	-webkit-backface-visibility: hidden;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body, html, #root {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	min-height: 100vh;
+	background-color: $col1;
+	color: $col4;
+}
+#root {
+	display: block!important;
+}
+.main {
+	width: 100%;
+	height: 100%;
+}
+.main > *{
+	display: block;
+}
+.content-c {
+	display: flex;
+	width: 100%;
+	min-height: 100%;
+	flex-direction: column;
+	justify-content: center;
+	&, & > * {
+		flex-shrink: 0;
+		flex-grow: 0;
+	}
+}
+@keyframes load {
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
+.content {
+	display: block;
+	max-width: 480px;
+	margin: 0 auto;
+	padding: 10px 20px 20px;
+	box-sizing: border-box;
+	background-color: $col2;
+	border-radius: 8px;
+	box-shadow: 2px 4px 10px #0008;
+	& > * {
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.title-main {
+		font-size: 32px;
+	}
+	.des-main {
+		margin-bottom: 20px;
+		color: $col5;
+	}
+	.sec {
+		margin-bottom: 20px;
+		display: block;
+		width: 100%;
+		> * {
+			display: block;
+			width: 100%;
+			text-align: left;
+		}
+		.title {
+			font-size: 18px;
+		}
+		.des {
+			font-size: 12px;
+			color: $col5;
+		}
+		.comm {
+			font-size: 12px;
+			color: $col5;
+		}
+		.mess, input {
+			color: $col4;
+			background-color: $col1;
+			border: 2px solid $col1;
+			font-size: 16px;
+			padding: 6px 12px;
+			box-sizing: border-box;
+			border-radius: 6px;
+			transition-duration: $default-transition;
+			word-wrap: break-word;
+			outline: none;
+			&:focus {
+				border-color: $col3;
+			}
+		}
+		.mess {
+			min-height: 140px;
+		}
+	}
+	.sub {
+		text-align: right;
+		input {
+			@include button;
+		}
+	}
+	.load {
+		div {
+			width: 140px;
+			height: 140px;
+			margin: 0 auto;
+			background-color: $col2;
+			border: 10px solid $col2;
+			border-top-color: $col3;
+			border-bottom-color: $col3;
+			border-radius: 50%;
+			animation: load 1s infinite;
+		}
+	}
+	.done {
+		> * {
+			display: block;
+			text-align: center;
+		}
+		.ico {
+			svg {
+				margin: 10px auto;
+				width: 140px;
+				height: 140px;
+				color: $col3;
+			}
+		}
+		.title {
+			font-size: 22px;
+		}
+		.but-c {
+			text-align: center;
+		}
+		button {
+			display: block;
+			margin: 2px auto;
+			@include button;
+		}
+	}
+}
+
+@media (max-width: 460px) {
+	.main {
+	}
+}
